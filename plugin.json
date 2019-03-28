@@ -8,22 +8,17 @@
     },
     "authors": [
         {
-            "name": "Matomo",
-            "email": "",
-            "homepage": ""
+            "name": "Dominik Thiemermann",
+            "email": "dominik@dthiemermann.org",
+            "homepage": "https://www.dthiemermann.org"
         }
     ],
     "support": {
-        "email": "",
-        "issues": "",
-        "forum": "",
-        "irc": "",
-        "wiki": "",
-        "source": "",
-        "docs": "",
-        "rss": ""
+        "email": "dominik@dthiemermann.org",
+        "issues": "https://github.com/dominik-th/matomo-plugin-LoginOIDC/issues",
+        "source": "https://github.com/dominik-th/matomo-plugin-LoginOIDC"
     },
     "homepage": "",
     "license": "GPL v3+",
-    "keywords": []
+    "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"]
 }
