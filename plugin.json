@@ -1,6 +1,6 @@
 {
     "name": "LoginOIDC",
-    "description": "Add OIDC support for integration in existing authentication services",
+    "description": "Adds OIDC support for integrating existing authentication services",
     "version": "0.1.0",
     "theme": false,
     "require": {
