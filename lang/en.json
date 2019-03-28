@@ -1,0 +1,6 @@
+{
+  "LoginOIDC":{
+    "SettingAuthenticationName": "Name",
+    "SettingAuthenticationNameHelp": "Name of the authentication source which will be displayed on the login screen"
+  }
+}
