@@ -24,7 +24,7 @@ class LoginOIDC extends \Piwik\Plugin
                 provider_user VARCHAR( 255 ) NOT NULL,
                 provider VARCHAR( 255 ) NOT NULL,
                 date_connected TIMESTAMP NOT NULL,
-                PRIMARY KEY ( user, provider_user, provider ),
+                PRIMARY KEY ( provider_user, provider ),
                 FOREIGN KEY ( user ) REFERENCES " . Common::prefixTable('user') . "( login ) ON DELETE CASCADE
               ) DEFAULT CHARSET=utf8 ";
       Db::exec($sql);
