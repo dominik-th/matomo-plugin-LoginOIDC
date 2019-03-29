@@ -5,15 +5,22 @@
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-
 namespace Piwik\Plugins\LoginOIDC;
 
-use Piwik\Db;
+use Exception;
 use Piwik\Common;
-use \Exception;
+use Piwik\Db;
+use Piwik\FrontController;
 
 class LoginOIDC extends \Piwik\Plugin
 {
+
+  public function registerEvents()
+  {
+    return array(
+      'Template.userSettings.afterTokenAuth' => 'renderLoginOIDCUserSettings'
+    );
+  }
 
   public function install()
   {
@@ -39,6 +46,14 @@ class LoginOIDC extends \Piwik\Plugin
   public function uninstall()
   {
     Db::dropTables(Common::prefixTable('loginoidc_provider'));
+  }
+
+  public function renderLoginOIDCUserSettings(&$out)
+  {
+    $content = FrontController::getInstance()->dispatch('LoginOIDC', 'userSettings');
+    if (!empty($content)) {
+      $out .= $content;
+    }
   }
 
 }

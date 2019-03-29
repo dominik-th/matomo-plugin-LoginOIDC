@@ -1,0 +1,24 @@
+<div piwik-content-block content-title="{{ 'LoginOIDC_OpenIDConnect'|translate }}">
+
+  <p>
+    {{ 'LoginOIDC_OIDCIntro'|translate('<a href="https://openid.net/connect/" rel="noreferrer noopener">', '</a>')|raw }}
+  </p>
+
+  {% if isLinked %}
+    <p>
+      <strong>{{ 'LoginOIDC_AccountLinked'|translate }}</strong>
+      Remote User ID: abc...
+      <br />
+      <br />
+      <a class="red lighten-2 btn btn-link" href="{{ linkTo({'module': 'LoginOIDC', 'action': 'unlink'}) }}">{{ 'LoginOIDC_Unlink'|translate }}</a>
+    </p>
+  {% else %}
+    <p>
+      <strong>{{ 'LoginOIDC_AccountNotLinked'|translate }}</strong>
+      <br />
+      <br />
+      <a class="btn btn-link" href="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">{{ 'LoginOIDC_Link'|translate }}</a>
+    </p>
+  {% endif %}
+
+</div>

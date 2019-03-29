@@ -7,14 +7,15 @@
  */
 namespace Piwik\Plugins\LoginOIDC;
 
+use Exception;
+use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\Db;
 use Piwik\Piwik;
-use Piwik\Common;
 use Piwik\Plugins\UsersManager\Model;
-use Piwik\Container\StaticContainer;
 use Piwik\Session\SessionInitializer;
 use Piwik\Url;
-use \Exception;
+use Piwik\View;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -48,6 +49,21 @@ class Controller extends \Piwik\Plugin\Controller
       $sessionInitializer = new SessionInitializer();
     }
     $this->sessionInitializer = $sessionInitializer;
+  }
+
+  public function userSettings()
+  {
+    return $this->renderTemplate('userSettings', array(
+      'isLinked' => $this->isLinked('oidc')
+    ));
+  }
+
+  public function unlink()
+  {
+    $sql = "DELETE FROM " . Common::prefixTable('loginoidc_provider') . " WHERE user=? AND provider=?";
+    $bind = array(Piwik::getCurrentUserLogin(), 'oidc');
+    Db::query($sql, $bind);
+    $this->redirectToIndex('UsersManager', 'userSettings');
   }
 
   public function signin()
@@ -145,7 +161,7 @@ class Controller extends \Piwik\Plugin\Controller
       } else {
         // link current user with the remote user
         $this->linkAccount($providerUserId);
-        Url::redirectToUrl('index.php');
+        $this->redirectToIndex('UsersManager', 'userSettings');
       }
     } else {
       // users identity has been successfully confirmed by the remote oidc server
@@ -160,7 +176,6 @@ class Controller extends \Piwik\Plugin\Controller
       }
     }
   }
-
 
   private function linkAccount($providerUserId)
   {
@@ -213,6 +228,17 @@ class Controller extends \Piwik\Plugin\Controller
     } else {
       $userModel = new Model();
       return $userModel->getUser($result["user"]);
+    }
+  }
+
+  private function isLinked($provider)
+  {
+    $sql = "SELECT user FROM " . Common::prefixTable('loginoidc_provider') . " WHERE provider=? AND user=?";
+    $result = Db::fetchRow($sql, array($provider, Piwik::getCurrentUserLogin()));
+    if (empty($result)) {
+      return false;
+    } else {
+      return true;
     }
   }
 
