@@ -20,6 +20,9 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
 
   /** @var Setting **/
+  public $disableSuperuser;
+
+  /** @var Setting **/
   public $authenticationName;
 
   /** @var Setting **/
@@ -42,7 +45,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   protected function init()
   {
-    // System setting --> allows selection of a single value
+    $this->disableSuperuser = $this->createDisableSuperuserSetting();
     $this->authenticationName = $this->createAuthenticationNameSetting();
     $this->authorizeUrl = $this->createAuthorizeUrlSetting();
     $this->tokenUrl = $this->createTokenUrlSetting();
@@ -50,6 +53,15 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     $this->clientId = $this->createClientIdSetting();
     $this->clientSecret = $this->createClientSecretSetting();
     $this->scope = $this->createScopeSetting();
+  }
+
+  private function createDisableSuperuserSetting()
+  {
+    return $this->makeSetting('disableSuperuser', $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+      $field->title = Piwik::translate('LoginOIDC_SettingDisableSuperuser');
+      $field->description = Piwik::translate('LoginOIDC_SettingDisableSuperuserHelp');
+      $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+    });
   }
 
   private function createAuthenticationNameSetting()
