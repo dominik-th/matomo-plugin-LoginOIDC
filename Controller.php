@@ -53,8 +53,10 @@ class Controller extends \Piwik\Plugin\Controller
 
   public function userSettings()
   {
+    $providerUser = $this->getProviderUser('oidc');
     return $this->renderTemplate('userSettings', array(
-      'isLinked' => $this->isLinked('oidc')
+      'isLinked' => !empty($providerUser),
+      'remoteUserId' => $providerUser["provider_user"]
     ));
   }
 
@@ -231,15 +233,10 @@ class Controller extends \Piwik\Plugin\Controller
     }
   }
 
-  private function isLinked($provider)
+  private function getProviderUser($provider)
   {
-    $sql = "SELECT user FROM " . Common::prefixTable('loginoidc_provider') . " WHERE provider=? AND user=?";
-    $result = Db::fetchRow($sql, array($provider, Piwik::getCurrentUserLogin()));
-    if (empty($result)) {
-      return false;
-    } else {
-      return true;
-    }
+    $sql = "SELECT user, provider_user, provider FROM " . Common::prefixTable('loginoidc_provider') . " WHERE provider=? AND user=?";
+    return Db::fetchRow($sql, array($provider, Piwik::getCurrentUserLogin()));
   }
 
 }

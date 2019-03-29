@@ -1,6 +1,32 @@
 {
   "LoginOIDC":{
+    "SettingDisableSuperuser": "Disable external login for superusers.",
+    "SettingDisableSuperuserHelp": "",
     "SettingAuthenticationName": "Name",
-    "SettingAuthenticationNameHelp": "Name of the authentication source which will be displayed on the login screen"
+    "SettingAuthenticationNameHelp": "Name of the authentication source which will be displayed on the login screen",
+    "SettingAuthorizeUrl": "Authorize URL",
+    "SettingAuthorizeUrlHelp": "e.g. https://github.com/login/oauth/authorize",
+    "SettingTokenUrl": "Token URL",
+    "SettingTokenUrlHelp": "e.g. https://github.com/login/oauth/access_token",
+    "SettingUserinfoUrl": "Userinfo URL",
+    "SettingUserinfoUrlHelp": "e.g. https://api.github.com/user",
+    "SettingClientId": "Client ID",
+    "SettingClientIdHelp": "",
+    "SettingClientSecret": "Client Secret",
+    "SettingClientSecretHelp": "",
+    "SettingScope": "OAuth Scopes",
+    "SettingScopeHelp": "",
+    "OpenIDConnect": "OpenID Connect",
+    "OIDCIntro": "This allows you to sign in using an external authentication service",
+    "AccountLinked": "Your account is currently linked (Remote User ID: %1$s).",
+    "AccountNotLinked": "Your account is currently not linked.",
+    "Link": "Link account",
+    "Unlink": "Unlink account",
+    "ExceptionNotConfigured": "LoginOIDC has not been configured yet.",
+    "ExceptionStateMismatch": "OAuth state mismatch.",
+    "ExceptionUnknownProvider": "Unknown OAuth provider.",
+    "ExceptionInvalidResponse": "Unexpected response from OAuth service.",
+    "ExceptionUserNotFound": "User not found. OAuth registrations are not supported.",
+    "ExceptionSuperUserOauthDisabled": "OAuth login disabled for superusers."
   }
 }
