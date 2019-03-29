@@ -66,7 +66,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createAuthenticationNameSetting()
   {
-    return $this->makeSetting('authenticationName', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('authenticationName', $default = 'OAuth login', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingAuthenticationName');
       $field->description = Piwik::translate('LoginOIDC_SettingAuthenticationNameHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_TEXT;

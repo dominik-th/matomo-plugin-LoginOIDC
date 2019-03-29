@@ -60,6 +60,14 @@ class Controller extends \Piwik\Plugin\Controller
     ));
   }
 
+  public function loginMod()
+  {
+    $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
+    return $this->renderTemplate('loginMod', array(
+      'caption' => $settings->authenticationName->getValue()
+    ));
+  }
+
   public function unlink()
   {
     $sql = "DELETE FROM " . Common::prefixTable('loginoidc_provider') . " WHERE user=? AND provider=?";

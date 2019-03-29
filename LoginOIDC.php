@@ -18,8 +18,15 @@ class LoginOIDC extends \Piwik\Plugin
   public function registerEvents()
   {
     return array(
-      'Template.userSettings.afterTokenAuth' => 'renderLoginOIDCUserSettings'
+      'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
+      'Template.userSettings.afterTokenAuth' => 'renderLoginOIDCUserSettings',
+      'Template.loginNav' => 'renderLoginOIDCMod'
     );
+  }
+
+  public function getStylesheetFiles(&$files)
+  {
+    $files[] = "plugins/LoginOIDC/stylesheets/loginMod.css";
   }
 
   public function install()
@@ -53,6 +60,16 @@ class LoginOIDC extends \Piwik\Plugin
     $content = FrontController::getInstance()->dispatch('LoginOIDC', 'userSettings');
     if (!empty($content)) {
       $out .= $content;
+    }
+  }
+
+  public function renderLoginOIDCMod(&$out, $payload)
+  {
+    if ($payload === 'bottom') {
+      $content = FrontController::getInstance()->dispatch('LoginOIDC', 'loginMod');
+      if (!empty($content)) {
+        $out .= $content;
+      }
     }
   }
 
