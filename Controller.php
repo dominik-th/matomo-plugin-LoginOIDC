@@ -109,7 +109,8 @@ class Controller extends \Piwik\Plugin\Controller
       'client_id' => $settings->clientId->getValue(),
       'scope' => $settings->scope->getValue(),
       'redirect_uri'=> $redirectUrl,
-      'state' => $_SESSION["loginoidc_state"]
+      'state' => $_SESSION["loginoidc_state"],
+      'response_type' => 'code'
     );
     $url = $settings->authorizeUrl->getValue();
     $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . http_build_query($params);
