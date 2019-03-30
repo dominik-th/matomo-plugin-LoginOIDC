@@ -322,7 +322,7 @@ class Controller extends \Piwik\Plugin\Controller
      * @param  string  $remoteId
      * @return array
      */
-    private function getUserByRemoteId($provider, $remoteId) : array
+    private function getUserByRemoteId($provider, $remoteId)
     {
         $sql = "SELECT user FROM " . Common::prefixTable("loginoidc_provider") . " WHERE provider=? AND provider_user=?";
         $result = Db::fetchRow($sql, array($provider, $remoteId));
@@ -340,7 +340,7 @@ class Controller extends \Piwik\Plugin\Controller
      * @param  string  $provider
      * @return array
      */
-    private function getProviderUser($provider) : array
+    private function getProviderUser($provider)
     {
         $sql = "SELECT user, provider_user, provider FROM " . Common::prefixTable("loginoidc_provider") . " WHERE provider=? AND user=?";
         return Db::fetchRow($sql, array($provider, Piwik::getCurrentUserLogin()));
