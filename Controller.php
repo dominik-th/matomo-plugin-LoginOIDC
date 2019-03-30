@@ -149,7 +149,8 @@ class Controller extends \Piwik\Plugin\Controller
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
       'Content-Type: application/json',
       'Content-Length: ' . strlen($dataString),
-      'Accept: application/json'
+      'Accept: application/json',
+      'User-Agent: LoginOIDC-Matomo-Plugin'
     ));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_URL, $settings->tokenUrl->getValue());
@@ -164,7 +165,8 @@ class Controller extends \Piwik\Plugin\Controller
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
       'Authorization: Bearer ' . $result->access_token,
-      'Accept: application/json'
+      'Accept: application/json',
+      'User-Agent: LoginOIDC-Matomo-Plugin'
     ));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_URL, $settings->userinfoUrl->getValue());
