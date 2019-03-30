@@ -11,6 +11,7 @@ use Exception;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Db;
+use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\UsersManager\Model;
 use Piwik\Session\SessionInitializer;
@@ -19,6 +20,7 @@ use Piwik\View;
 
 class Controller extends \Piwik\Plugin\Controller
 {
+  const OIDC_NONCE = 'LoginOIDC.nonce';
 
   /**
    * @var Auth
@@ -56,7 +58,8 @@ class Controller extends \Piwik\Plugin\Controller
     $providerUser = $this->getProviderUser('oidc');
     return $this->renderTemplate('userSettings', array(
       'isLinked' => !empty($providerUser),
-      'remoteUserId' => $providerUser["provider_user"]
+      'remoteUserId' => $providerUser["provider_user"],
+      'nonce' => Nonce::getNonce(self::OIDC_NONCE)
     ));
   }
 
@@ -64,12 +67,19 @@ class Controller extends \Piwik\Plugin\Controller
   {
     $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
     return $this->renderTemplate('loginMod', array(
-      'caption' => $settings->authenticationName->getValue()
+      'caption' => $settings->authenticationName->getValue(),
+      'nonce' => Nonce::getNonce(self::OIDC_NONCE)
     ));
   }
 
   public function unlink()
   {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      throw new Exception(Piwik::translate('LoginOIDC_MethodNotAllowed'));
+    }
+    // csrf protection
+    Nonce::checkNonce(self::OIDC_NONCE, $_POST["form_nonce"]);
+
     $sql = "DELETE FROM " . Common::prefixTable('loginoidc_provider') . " WHERE user=? AND provider=?";
     $bind = array(Piwik::getCurrentUserLogin(), 'oidc');
     Db::query($sql, $bind);
@@ -78,9 +88,15 @@ class Controller extends \Piwik\Plugin\Controller
 
   public function signin()
   {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      throw new Exception(Piwik::translate('LoginOIDC_MethodNotAllowed'));
+    }
+    // csrf protection
+    Nonce::checkNonce(self::OIDC_NONCE, $_POST["form_nonce"]);
+
     $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
     if (!$this->isPluginSetup($settings)) {
-      throw new Exception(Piwik::translate('LoginOIDC_LoginOIDC_ExceptionNotConfigured'));
+      throw new Exception(Piwik::translate('LoginOIDC_ExceptionNotConfigured'));
     }
     $params = array(
       'module' => 'LoginOIDC',

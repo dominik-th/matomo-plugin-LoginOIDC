@@ -1,4 +1,9 @@
 <hr />
 <div class="center-align">
-  <a class="btn btn-link loginoidc-auth-button" href="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">{{ caption }}</a>
+  <form method="post" action="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">
+    <input type="hidden" name="form_nonce" value="{{ nonce }}"/>
+    <button class="btn loginoidc-auth-button" type="submit">
+      {{ caption }}
+    </button>
+  </form>
 </div>

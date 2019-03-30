@@ -9,14 +9,24 @@
       <strong>{{ 'LoginOIDC_AccountLinked'|translate(remoteUserId) }}</strong>
       <br />
       <br />
-      <a class="red lighten-2 btn btn-link" href="{{ linkTo({'module': 'LoginOIDC', 'action': 'unlink'}) }}">{{ 'LoginOIDC_Unlink'|translate }}</a>
+      <form method="post" action="{{ linkTo({'module': 'LoginOIDC', 'action': 'unlink'}) }}">
+        <input type="hidden" name="form_nonce" value="{{ nonce }}"/>
+        <button class="red lighten-2 btn" type="submit">
+          {{ 'LoginOIDC_Unlink'|translate }}
+        </button>
+      </form>
     </p>
   {% else %}
     <p>
       <strong>{{ 'LoginOIDC_AccountNotLinked'|translate }}</strong>
       <br />
       <br />
-      <a class="btn btn-link" href="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">{{ 'LoginOIDC_Link'|translate }}</a>
+      <form method="post" action="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">
+        <input type="hidden" name="form_nonce" value="{{ nonce }}"/>
+        <button class="btn" type="submit">
+          {{ 'LoginOIDC_Link'|translate }}
+        </button>
+      </form>
     </p>
   {% endif %}
 
