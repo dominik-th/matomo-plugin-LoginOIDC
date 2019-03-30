@@ -11,6 +11,7 @@ namespace Piwik\Plugins\LoginOIDC;
 use Piwik\Piwik;
 use Piwik\Settings\Setting;
 use Piwik\Settings\FieldConfig;
+use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
 
 /**
@@ -35,6 +36,9 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
   public $userinfoUrl;
 
   /** @var Setting **/
+  public $userinfoId;
+
+  /** @var Setting **/
   public $clientId;
 
   /** @var Setting **/
@@ -50,6 +54,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     $this->authorizeUrl = $this->createAuthorizeUrlSetting();
     $this->tokenUrl = $this->createTokenUrlSetting();
     $this->userinfoUrl = $this->createUserinfoUrlSetting();
+    $this->userinfoId = $this->createUserinfoIdSetting();
     $this->clientId = $this->createClientIdSetting();
     $this->clientSecret = $this->createClientSecretSetting();
     $this->scope = $this->createScopeSetting();
@@ -100,6 +105,16 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
       $field->description = Piwik::translate('LoginOIDC_SettingUserinfoUrlHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_URL;
       $field->validators[] = new UrlLike();
+    });
+  }
+
+  private function createUserinfoIdSetting()
+  {
+    return $this->makeSetting('userinfoId', $default = 'sub', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+      $field->title = Piwik::translate('LoginOIDC_SettingUserinfoId');
+      $field->description = Piwik::translate('LoginOIDC_SettingUserinfoIdHelp');
+      $field->uiControl = FieldConfig::UI_CONTROL_URL;
+      $field->validators[] = new NotEmpty();
     });
   }
 

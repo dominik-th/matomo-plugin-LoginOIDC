@@ -172,7 +172,8 @@ class Controller extends \Piwik\Plugin\Controller
     curl_close($curl);
     $result = json_decode($response);
 
-    $providerUserId = $result->sub;
+    $userinfoId = $settings->userinfoId->getValue();
+    $providerUserId = $result->$userinfoId;
 
     if (empty($providerUserId)) {
       throw new Exception(Piwik::translate('LoginOIDC_ExceptionInvalidResponse'));
