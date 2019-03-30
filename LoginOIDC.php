@@ -22,7 +22,7 @@ class LoginOIDC extends \Piwik\Plugin
      *
      * @return array
      */
-    public function registerEvents()
+    public function registerEvents() : array
     {
         return array(
             "AssetManager.getStylesheetFiles" => "getStylesheetFiles",
@@ -37,7 +37,7 @@ class LoginOIDC extends \Piwik\Plugin
      * @param  array  $files
      * @return void
      */
-    public function getStylesheetFiles(&$files)
+    public function getStylesheetFiles(array &$files)
     {
         $files[] = "plugins/LoginOIDC/stylesheets/loginMod.css";
     }
@@ -48,7 +48,7 @@ class LoginOIDC extends \Piwik\Plugin
      * @param  string  $out
      * @return void
      */
-    public function renderLoginOIDCUserSettings(&$out)
+    public function renderLoginOIDCUserSettings(string &$out)
     {
         $content = FrontController::getInstance()->dispatch("LoginOIDC", "userSettings");
         if (!empty($content)) {
@@ -63,9 +63,9 @@ class LoginOIDC extends \Piwik\Plugin
      * @param  string|null  $payload
      * @return void
      */
-    public function renderLoginOIDCMod(&$out, $payload)
+    public function renderLoginOIDCMod(string &$out, string $payload = null)
     {
-        if ($payload === "bottom") {
+        if (!empty($payload) && $payload === "bottom") {
             $content = FrontController::getInstance()->dispatch("LoginOIDC", "loginMod");
             if (!empty($content)) {
                 $out .= $content;

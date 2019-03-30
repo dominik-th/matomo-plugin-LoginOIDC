@@ -10,8 +10,9 @@
 namespace Piwik\Plugins\LoginOIDC;
 
 use Piwik\Piwik;
-use Piwik\Settings\Setting;
 use Piwik\Settings\FieldConfig;
+use Piwik\Settings\Plugin\SystemSetting;
+use Piwik\Settings\Setting;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
 
@@ -104,7 +105,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createDisableSuperuserSetting()
+    private function createDisableSuperuserSetting() : SystemSetting
     {
         return $this->makeSetting("disableSuperuser", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingDisableSuperuser");
@@ -118,7 +119,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createAuthenticationNameSetting()
+    private function createAuthenticationNameSetting() : SystemSetting
     {
         return $this->makeSetting("authenticationName", $default = "OAuth login", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingAuthenticationName");
@@ -132,7 +133,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createAuthorizeUrlSetting()
+    private function createAuthorizeUrlSetting() : SystemSetting
     {
         return $this->makeSetting("authorizeUrl", $default = "https://github.com/login/oauth/authorize", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingAuthorizeUrl");
@@ -147,7 +148,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createTokenUrlSetting()
+    private function createTokenUrlSetting() : SystemSetting
     {
         return $this->makeSetting("tokenUrl", $default = "https://github.com/login/oauth/access_token", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingTokenUrl");
@@ -162,7 +163,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createUserinfoUrlSetting()
+    private function createUserinfoUrlSetting() : SystemSetting
     {
         return $this->makeSetting("userinfoUrl", $default = "https://api.github.com/user", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingUserinfoUrl");
@@ -177,7 +178,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createUserinfoIdSetting()
+    private function createUserinfoIdSetting() : SystemSetting
     {
         return $this->makeSetting("userinfoId", $default = "id", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingUserinfoId");
@@ -192,7 +193,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createClientIdSetting()
+    private function createClientIdSetting() : SystemSetting
     {
         return $this->makeSetting("clientId", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingClientId");
@@ -206,7 +207,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createClientSecretSetting()
+    private function createClientSecretSetting() : SystemSetting
     {
         return $this->makeSetting("clientSecret", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingClientSecret");
@@ -220,7 +221,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      *
      * @return SystemSetting
      */
-    private function createScopeSetting()
+    private function createScopeSetting() : SystemSetting
     {
         return $this->makeSetting("scope", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingScope");
