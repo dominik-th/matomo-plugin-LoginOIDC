@@ -1,24 +1,27 @@
 {
-    "name": "LoginOIDC",
-    "description": "Adds OIDC support for integrating existing authentication services",
-    "version": "0.1.0",
-    "theme": false,
-    "require": {
-        "piwik": ">=3.9.1-stable,<4.0.0-b1"
-    },
-    "authors": [
-        {
-            "name": "Dominik Thiemermann",
-            "email": "dominik@dthiemermann.org",
-            "homepage": "https://www.dthiemermann.org"
-        }
-    ],
-    "support": {
-        "email": "dominik@dthiemermann.org",
-        "issues": "https://github.com/dominik-th/matomo-plugin-LoginOIDC/issues",
-        "source": "https://github.com/dominik-th/matomo-plugin-LoginOIDC"
-    },
-    "homepage": "",
-    "license": "GPL v3+",
-    "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"]
+  "name": "LoginOIDC",
+  "version": "0.1.0",
+  "description": "Adds OIDC support for integrating external authentication services",
+  "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"],
+  "license": "GPL v3+",
+  "homepage": "https://github.com/dominik-th/matomo-plugin-LoginOIDC",
+  "authors": [
+    {
+      "name": "Dominik Thiemermann",
+      "email": "hello@dthiemermann.org",
+      "homepage": "https://www.dthiemermann.org"
+    }
+  ],
+  "require": {
+    "piwik": ">=3.9.1-stable,<4.0.0-b1",
+    "php": ">=7.0.0"
+  },
+  "donate": {
+    "paypal": "matomo-loginoidc@dthiemermann.org"
+  },
+  "support": {
+    "email": "matomo-loginoidc@dthiemermann.org",
+    "issues": "https://github.com/dominik-th/matomo-plugin-LoginOIDC/issues",
+    "source": "https://github.com/dominik-th/matomo-plugin-LoginOIDC"
+  }
 }
