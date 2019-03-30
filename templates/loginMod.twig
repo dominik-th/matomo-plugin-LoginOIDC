@@ -1,9 +1,12 @@
+{# This is right below the 'forgot password' #}
+
 <hr />
+
 <div class="center-align">
-  <form method="post" action="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">
-    <input type="hidden" name="form_nonce" value="{{ nonce }}"/>
-    <button class="btn loginoidc-auth-button" type="submit">
-      {{ caption }}
-    </button>
-  </form>
+    <form method="post" action="{{ linkTo({'module': 'LoginOIDC', 'action': 'signin'}) }}">
+        <input type="hidden" name="form_nonce" value="{{ nonce }}" />
+        <button class="btn loginoidc-auth-button" type="submit">
+            {{ caption }}
+        </button>
+    </form>
 </div>
