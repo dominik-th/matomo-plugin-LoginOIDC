@@ -80,7 +80,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createAuthorizeUrlSetting()
   {
-    return $this->makeSetting('authorizeUrl', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('authorizeUrl', $default = 'https://github.com/login/oauth/authorize', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingAuthorizeUrl');
       $field->description = Piwik::translate('LoginOIDC_SettingAuthorizeUrlHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_URL;
@@ -90,7 +90,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createTokenUrlSetting()
   {
-    return $this->makeSetting('tokenUrl', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('tokenUrl', $default = 'https://github.com/login/oauth/access_token', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingTokenUrl');
       $field->description = Piwik::translate('LoginOIDC_SettingTokenUrlHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_URL;
@@ -100,7 +100,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createUserinfoUrlSetting()
   {
-    return $this->makeSetting('userinfoUrl', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('userinfoUrl', $default = 'https://api.github.com/user', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingUserinfoUrl');
       $field->description = Piwik::translate('LoginOIDC_SettingUserinfoUrlHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_URL;
@@ -110,10 +110,10 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createUserinfoIdSetting()
   {
-    return $this->makeSetting('userinfoId', $default = 'sub', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('userinfoId', $default = 'id', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingUserinfoId');
       $field->description = Piwik::translate('LoginOIDC_SettingUserinfoIdHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_URL;
+      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
       $field->validators[] = new NotEmpty();
     });
   }
@@ -138,7 +138,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createScopeSetting()
   {
-    return $this->makeSetting('scope', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('scope', $default = 'user:email', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingScope');
       $field->description = Piwik::translate('LoginOIDC_SettingScopeHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
