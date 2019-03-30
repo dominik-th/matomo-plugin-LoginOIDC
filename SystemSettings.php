@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Piwik - free/libre analytics platform
  *
@@ -14,135 +15,217 @@ use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
 
-/**
- * Defines settings for LoginOIDC plugin.
- */
 class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
 
-  /** @var Setting **/
-  public $disableSuperuser;
+    /**
+     * The disable superuser setting.
+     *
+     * @var bool
+     */
+    public $disableSuperuser;
 
-  /** @var Setting **/
-  public $authenticationName;
+    /**
+     * The name of the oauth provider, which is also shown on the login screen.
+     *
+     * @var string
+     */
+    public $authenticationName;
 
-  /** @var Setting **/
-  public $authorizeUrl;
+    /**
+     * The url where the external service authenticates the user.
+     *
+     * @var string
+     */
+    public $authorizeUrl;
 
-  /** @var Setting **/
-  public $tokenUrl;
+    /**
+     * The url where an access token can be retreived (json response expected).
+     *
+     * @var string
+     */
+    public $tokenUrl;
 
-  /** @var Setting **/
-  public $userinfoUrl;
+    /**
+     * The url where the external service provides the users unique id (json response expected).
+     *
+     * @var string
+     */
+    public $userinfoUrl;
 
-  /** @var Setting **/
-  public $userinfoId;
+    /**
+     * The name of the unique user id field in $userinfoUrl response.
+     *
+     * @var string
+     */
+    public $userinfoId;
 
-  /** @var Setting **/
-  public $clientId;
+    /**
+     * The client id given by the provider.
+     *
+     * @var string
+     */
+    public $clientId;
 
-  /** @var Setting **/
-  public $clientSecret;
+    /**
+     * The client secret given by the provider.
+     *
+     * @var string
+     */
+    public $clientSecret;
 
-  /** @var Setting **/
-  public $scope;
+    /**
+     * The oauth scopes.
+     *
+     * @var string
+     */
+    public $scope;
 
-  protected function init()
-  {
-    $this->disableSuperuser = $this->createDisableSuperuserSetting();
-    $this->authenticationName = $this->createAuthenticationNameSetting();
-    $this->authorizeUrl = $this->createAuthorizeUrlSetting();
-    $this->tokenUrl = $this->createTokenUrlSetting();
-    $this->userinfoUrl = $this->createUserinfoUrlSetting();
-    $this->userinfoId = $this->createUserinfoIdSetting();
-    $this->clientId = $this->createClientIdSetting();
-    $this->clientSecret = $this->createClientSecretSetting();
-    $this->scope = $this->createScopeSetting();
-  }
+    /**
+     * Initialize the plugin settings.
+     *
+     * @return void
+     */
+    protected function init()
+    {
+        $this->disableSuperuser = $this->createDisableSuperuserSetting();
+        $this->authenticationName = $this->createAuthenticationNameSetting();
+        $this->authorizeUrl = $this->createAuthorizeUrlSetting();
+        $this->tokenUrl = $this->createTokenUrlSetting();
+        $this->userinfoUrl = $this->createUserinfoUrlSetting();
+        $this->userinfoId = $this->createUserinfoIdSetting();
+        $this->clientId = $this->createClientIdSetting();
+        $this->clientSecret = $this->createClientSecretSetting();
+        $this->scope = $this->createScopeSetting();
+    }
 
-  private function createDisableSuperuserSetting()
-  {
-    return $this->makeSetting('disableSuperuser', $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingDisableSuperuser');
-      $field->description = Piwik::translate('LoginOIDC_SettingDisableSuperuserHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-    });
-  }
+    /**
+     * Add disable superuser setting.
+     *
+     * @return SystemSetting
+     */
+    private function createDisableSuperuserSetting()
+    {
+        return $this->makeSetting("disableSuperuser", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingDisableSuperuser");
+            $field->description = Piwik::translate("LoginOIDC_SettingDisableSuperuserHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
 
-  private function createAuthenticationNameSetting()
-  {
-    return $this->makeSetting('authenticationName', $default = 'OAuth login', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingAuthenticationName');
-      $field->description = Piwik::translate('LoginOIDC_SettingAuthenticationNameHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-    });
-  }
+    /**
+     * Add authentication name setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAuthenticationNameSetting()
+    {
+        return $this->makeSetting("authenticationName", $default = "OAuth login", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAuthenticationName");
+            $field->description = Piwik::translate("LoginOIDC_SettingAuthenticationNameHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+        });
+    }
 
-  private function createAuthorizeUrlSetting()
-  {
-    return $this->makeSetting('authorizeUrl', $default = 'https://github.com/login/oauth/authorize', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingAuthorizeUrl');
-      $field->description = Piwik::translate('LoginOIDC_SettingAuthorizeUrlHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_URL;
-      $field->validators[] = new UrlLike();
-    });
-  }
+    /**
+     * Add authorization url setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAuthorizeUrlSetting()
+    {
+        return $this->makeSetting("authorizeUrl", $default = "https://github.com/login/oauth/authorize", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAuthorizeUrl");
+            $field->description = Piwik::translate("LoginOIDC_SettingAuthorizeUrlHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_URL;
+            $field->validators[] = new UrlLike();
+        });
+    }
 
-  private function createTokenUrlSetting()
-  {
-    return $this->makeSetting('tokenUrl', $default = 'https://github.com/login/oauth/access_token', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingTokenUrl');
-      $field->description = Piwik::translate('LoginOIDC_SettingTokenUrlHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_URL;
-      $field->validators[] = new UrlLike();
-    });
-  }
+    /**
+     * Add token url setting.
+     *
+     * @return SystemSetting
+     */
+    private function createTokenUrlSetting()
+    {
+        return $this->makeSetting("tokenUrl", $default = "https://github.com/login/oauth/access_token", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingTokenUrl");
+            $field->description = Piwik::translate("LoginOIDC_SettingTokenUrlHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_URL;
+            $field->validators[] = new UrlLike();
+        });
+    }
 
-  private function createUserinfoUrlSetting()
-  {
-    return $this->makeSetting('userinfoUrl', $default = 'https://api.github.com/user', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingUserinfoUrl');
-      $field->description = Piwik::translate('LoginOIDC_SettingUserinfoUrlHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_URL;
-      $field->validators[] = new UrlLike();
-    });
-  }
+    /**
+     * Add userinfo url setting.
+     *
+     * @return SystemSetting
+     */
+    private function createUserinfoUrlSetting()
+    {
+        return $this->makeSetting("userinfoUrl", $default = "https://api.github.com/user", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingUserinfoUrl");
+            $field->description = Piwik::translate("LoginOIDC_SettingUserinfoUrlHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_URL;
+            $field->validators[] = new UrlLike();
+        });
+    }
 
-  private function createUserinfoIdSetting()
-  {
-    return $this->makeSetting('userinfoId', $default = 'id', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingUserinfoId');
-      $field->description = Piwik::translate('LoginOIDC_SettingUserinfoIdHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-      $field->validators[] = new NotEmpty();
-    });
-  }
+    /**
+     * Add userinfo id setting.
+     *
+     * @return SystemSetting
+     */
+    private function createUserinfoIdSetting()
+    {
+        return $this->makeSetting("userinfoId", $default = "id", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingUserinfoId");
+            $field->description = Piwik::translate("LoginOIDC_SettingUserinfoIdHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+            $field->validators[] = new NotEmpty();
+        });
+    }
 
-  private function createClientIdSetting()
-  {
-    return $this->makeSetting('clientId', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingClientId');
-      $field->description = Piwik::translate('LoginOIDC_SettingClientIdHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-    });
-  }
+    /**
+     * Add client id setting.
+     *
+     * @return SystemSetting
+     */
+    private function createClientIdSetting()
+    {
+        return $this->makeSetting("clientId", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingClientId");
+            $field->description = Piwik::translate("LoginOIDC_SettingClientIdHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+        });
+    }
 
-  private function createClientSecretSetting()
-  {
-    return $this->makeSetting('clientSecret', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingClientSecret');
-      $field->description = Piwik::translate('LoginOIDC_SettingClientSecretHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-    });
-  }
+    /**
+     * Add client secret setting.
+     *
+     * @return SystemSetting
+     */
+    private function createClientSecretSetting()
+    {
+        return $this->makeSetting("clientSecret", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingClientSecret");
+            $field->description = Piwik::translate("LoginOIDC_SettingClientSecretHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+        });
+    }
 
-  private function createScopeSetting()
-  {
-    return $this->makeSetting('scope', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
-      $field->title = Piwik::translate('LoginOIDC_SettingScope');
-      $field->description = Piwik::translate('LoginOIDC_SettingScopeHelp');
-      $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-    });
-  }
-
+    /**
+     * Add scope setting.
+     *
+     * @return SystemSetting
+     */
+    private function createScopeSetting()
+    {
+        return $this->makeSetting("scope", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingScope");
+            $field->description = Piwik::translate("LoginOIDC_SettingScopeHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+        });
+    }
 }
