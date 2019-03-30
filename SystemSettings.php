@@ -138,7 +138,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
   private function createScopeSetting()
   {
-    return $this->makeSetting('scope', $default = 'user:email', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+    return $this->makeSetting('scope', $default = '', FieldConfig::TYPE_STRING, function(FieldConfig $field) {
       $field->title = Piwik::translate('LoginOIDC_SettingScope');
       $field->description = Piwik::translate('LoginOIDC_SettingScopeHelp');
       $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
