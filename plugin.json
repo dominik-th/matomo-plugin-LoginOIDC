@@ -1,7 +1,7 @@
 {
     "name": "LoginOIDC",
-    "version": "0.1.0",
-    "description": "Adds OIDC support for integrating external authentication services",
+    "version": "0.1.1",
+    "description": "Adds support for integrating external authentication services",
     "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"],
     "license": "GPL v3+",
     "homepage": "https://github.com/dominik-th/matomo-plugin-LoginOIDC",
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "piwik": ">=3.9.1-stable,<4.0.0-b1",
+        "piwik": ">=3.8.0-b4,<4.0.0-b1",
         "php": ">=7.0.0"
     },
     "donate": {
