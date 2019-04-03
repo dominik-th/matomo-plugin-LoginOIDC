@@ -177,13 +177,13 @@ class Controller extends \Piwik\Plugin\Controller
             "grant_type" => "authorization_code",
             "state" => Common::getRequestVar("state")
         );
-        $dataString = json_encode($data);
+        $dataString = http_build_query($data);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $dataString);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
+            "Content-Type: application/x-www-form-urlencoded",
             "Content-Length: " . strlen($dataString),
             "Accept: application/json",
             "User-Agent: LoginOIDC-Matomo-Plugin"
