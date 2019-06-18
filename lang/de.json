@@ -18,6 +18,8 @@
         "SettingClientSecretHelp": "",
         "SettingScope": "OAuth Scopes",
         "SettingScopeHelp": "z.B. openid",
+        "SettingRedirectUriOverride": "Benutzerdefinierte Redirect URI",
+        "SettingRedirectUriOverrideHelp": "In manchen Fällen ist es nützlich, die Redirect URI, die an den Provider übergeben wird, zu überschreiben. Bei Unklarheit sollte dieses Feld freigelassen werden.",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "Dies erlaubt es Dir, Dich über einen externen Service bei Matomo einzuloggen.",
         "AccountLinked": "Dein Account ist zur Zeit verknüpft (Entfernte Benutzer-ID: %1$s).",

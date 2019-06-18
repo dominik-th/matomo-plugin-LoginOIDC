@@ -18,6 +18,8 @@
         "SettingClientSecretHelp": "",
         "SettingScope": "OAuth Scopes",
         "SettingScopeHelp": "e.g. openid",
+        "SettingRedirectUriOverride": "Redirect URI override",
+        "SettingRedirectUriOverrideHelp": "In some cases it might be useful to manipulate the redirect uri which is given to the provider. If you are unsure, just leave this field empty.",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "This allows you to sign in using an external authentication service.",
         "AccountLinked": "Your account is currently linked (Remote User ID: %1$s).",

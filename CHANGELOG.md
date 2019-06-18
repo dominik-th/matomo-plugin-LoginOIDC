@@ -1,5 +1,9 @@
 ## Changelog
 
+### 0.1.3
+
+* Add an option to override the redirect URI
+
 ### 0.1.2
 
 * Fix oauth flow for [Keycloak](https://github.com/keycloak/keycloak)

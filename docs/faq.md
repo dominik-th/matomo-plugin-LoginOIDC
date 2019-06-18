@@ -49,3 +49,22 @@ __What are the settings for ...?__
   * Userinfo URL: `http(s)://<YOUR_KEYCLOAK_INSTALLATION>/auth/realms/<REALM>/protocol/openid-connect/userinfo`
   * Userinfo ID: `sub`
   * OAuth Scopes: `openid`
+
+* Microsoft Azure AD
+  * Authorize URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/authorize`
+  * Token URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/token`
+  * Userinfo URL: `https://login.microsoftonline.com/{tenant_id}/openid/userinfo`
+  * Userinfo ID: `sub`
+  * OAuth Scopes: `openid`
+  * Redirect URI Override*: `http(s)://<YOUR_MATOMO_INSTALLATION>/oidc/callback`
+
+
+\*because Microsoft Azure AD does not allow query parameters in the redirect URI we also have to edit our nginx configuration to work around this limitation:
+
+```nginx
+server {
+    # ...
+    rewrite ^/oidc/callback /index.php?module=LoginOIDC&action=callback&provider=oidc redirect;
+    # ...
+}
+```

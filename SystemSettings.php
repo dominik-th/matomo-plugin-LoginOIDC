@@ -83,6 +83,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $scope;
 
     /**
+     * The optional redirect uri override.
+     *
+     * @var string
+     */
+    public $redirectUriOverride;
+
+    /**
      * Initialize the plugin settings.
      *
      * @return void
@@ -98,6 +105,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
+        $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
     }
 
     /**
@@ -227,6 +235,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->title = Piwik::translate("LoginOIDC_SettingScope");
             $field->description = Piwik::translate("LoginOIDC_SettingScopeHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+        });
+    }
+
+    /**
+     * Add redirect uri override setting.
+     *
+     * @return SystemSetting
+     */
+    private function createRedirectUriOverrideSetting() : SystemSetting
+    {
+        return $this->makeSetting("redirectUriOverride", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingRedirectUriOverride");
+            $field->description = Piwik::translate("LoginOIDC_SettingRedirectUriOverrideHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_URL;
         });
     }
 }

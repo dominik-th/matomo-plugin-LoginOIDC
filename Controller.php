@@ -307,12 +307,18 @@ class Controller extends \Piwik\Plugin\Controller
      */
     private function getRedirectUri() : string
     {
-        $params = array(
-            "module" => "LoginOIDC",
-            "action" => "callback",
-            "provider" => "oidc"
-        );
-        return Url::getCurrentUrlWithoutQueryString() . "?" . http_build_query($params);
+        $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
+
+        if (!empty($settings->redirectUriOverride->getValue())) {
+            return $settings->redirectUriOverride->getValue();
+        } else {
+            $params = array(
+                "module" => "LoginOIDC",
+                "action" => "callback",
+                "provider" => "oidc"
+            );
+            return Url::getCurrentUrlWithoutQueryString() . "?" . http_build_query($params);
+        }
     }
 
     /**
