@@ -27,6 +27,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $disableSuperuser;
 
     /**
+     * Whether new Matomo accounts should be created for unknown users
+     *
+     * @var bool
+     */
+    public $allowSignup;
+
+    /**
      * The name of the oauth provider, which is also shown on the login screen.
      *
      * @var string
@@ -97,6 +104,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     protected function init()
     {
         $this->disableSuperuser = $this->createDisableSuperuserSetting();
+        $this->allowSignup = $this->createAllowSignupSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
@@ -118,6 +126,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("disableSuperuser", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingDisableSuperuser");
             $field->description = Piwik::translate("LoginOIDC_SettingDisableSuperuserHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add allowSignup setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAllowSignupSetting() : SystemSetting
+    {
+        return $this->makeSetting("allowSignup", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAllowSignup");
+            $field->description = Piwik::translate("LoginOIDC_SettingAllowSignupHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }

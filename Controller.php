@@ -10,12 +10,14 @@
 namespace Piwik\Plugins\LoginOIDC;
 
 use Exception;
+use Piwik\Access;
 use Piwik\Auth;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Db;
 use Piwik\Nonce;
 use Piwik\Piwik;
+use Piwik\Plugins\UsersManager\API as UsersManagerAPI;
 use Piwik\Plugins\UsersManager\Model;
 use Piwik\Session\SessionInitializer;
 use Piwik\Url;
@@ -224,7 +226,23 @@ class Controller extends \Piwik\Plugin\Controller
         if (empty($user)) {
             // user with the remote id is currently not in our database
             if (Piwik::isUserIsAnonymous()) {
-                throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFound"));
+                if ($settings->allowSignup->getValue()) {
+                    $matomoUserLogin = $result->email;
+                    // Set an invalid pre-hashed password, to block the user from logging in by password
+                    Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $result) {
+                        UsersManagerApi::getInstance()->addUser($matomoUserLogin,
+                                                                "(disallow password login)",
+                                                                $result->email,
+                                                                /* $alias = */ false,
+                                                                /* $_isPasswordHashed = */ true);
+                    });
+                    $userModel = new Model();
+                    $user = $userModel->getUser($matomoUserLogin);
+                    $this->linkAccount($providerUserId, $matomoUserLogin);
+                    $this->signinAndRedirect($user);
+                } else {
+                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFound"));
+                }
             } else {
                 // link current user with the remote user
                 $this->linkAccount($providerUserId);
@@ -248,12 +266,16 @@ class Controller extends \Piwik\Plugin\Controller
      * Create a link between the remote user and the currently signed in user.
      *
      * @param  string  $providerUserId
+     * @param  string  $matomoUserLogin Override the local user if non-null
      * @return void
      */
-    private function linkAccount(string $providerUserId)
+    private function linkAccount(string $providerUserId, string $matomoUserLogin = null)
     {
+        if ($matomoUserLogin === null) {
+            $matomoUserLogin = Piwik::getCurrentUserLogin();
+        }
         $sql = "INSERT INTO " . Common::prefixTable("loginoidc_provider") . " (user, provider_user, provider, date_connected) VALUES (?, ?, ?, ?)";
-        $bind = array(Piwik::getCurrentUserLogin(), $providerUserId, "oidc", date("Y-m-d H:i:s"));
+        $bind = array($matomoUserLogin, $providerUserId, "oidc", date("Y-m-d H:i:s"));
         Db::query($sql, $bind);
     }
 
