@@ -2,7 +2,7 @@
     "LoginOIDC":{
         "SettingDisableSuperuser": "Disable external login for superusers.",
         "SettingDisableSuperuserHelp": "",
-        "SettingAllowSignup": "Create new users when users try to log in with unknown OIDC accounts",
+        "SettingAllowSignup": "Create new users when users try to log in with unknown OIDC accounts.",
         "SettingAllowSignupHelp": "",
         "SettingAuthenticationName": "Name",
         "SettingAuthenticationNameHelp": "Name of the authentication source which will be displayed on the login screen.",
