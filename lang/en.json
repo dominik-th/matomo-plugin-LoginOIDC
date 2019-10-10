@@ -32,7 +32,8 @@
         "ExceptionStateMismatch": "OAuth state mismatch.",
         "ExceptionUnknownProvider": "Unknown OAuth provider.",
         "ExceptionInvalidResponse": "Unexpected response from OAuth service.",
-        "ExceptionUserNotFound": "User not found. OAuth registrations are disabled.",
+        "ExceptionUserNotFoundAndSignupDisabled": "User not found. OAuth registrations are disabled.",
+        "ExceptionUserNotFoundAndNoEmail": "User not found. User could not be created because the OAuth service did not return an email address.",
         "ExceptionSuperUserOauthDisabled": "OAuth login disabled for superusers."
     }
 }

@@ -227,6 +227,10 @@ class Controller extends \Piwik\Plugin\Controller
             // user with the remote id is currently not in our database
             if (Piwik::isUserIsAnonymous()) {
                 if ($settings->allowSignup->getValue()) {
+                    if (empty($result->email)) {
+                        throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndNoEmail"));
+                    }
+
                     $matomoUserLogin = $result->email;
                     // Set an invalid pre-hashed password, to block the user from logging in by password
                     Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $result) {
@@ -241,7 +245,7 @@ class Controller extends \Piwik\Plugin\Controller
                     $this->linkAccount($providerUserId, $matomoUserLogin);
                     $this->signinAndRedirect($user);
                 } else {
-                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFound"));
+                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndSignupDisabled"));
                 }
             } else {
                 // link current user with the remote user

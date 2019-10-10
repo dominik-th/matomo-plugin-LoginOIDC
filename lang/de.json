@@ -30,7 +30,7 @@
         "ExceptionStateMismatch": "OAuth State Fehler.",
         "ExceptionUnknownProvider": "Unbekannter OAuth-Service.",
         "ExceptionInvalidResponse": "Unerwartete Antwort vom OAuth-Service.",
-        "ExceptionUserNotFound": "Benutzer nicht gefunden. Neue Registrierungen über OAuth werden nicht unterstützt.",
+        "ExceptionUserNotFoundAndSignupDisabled": "Benutzer nicht gefunden. Neue Registrierungen über OAuth werden nicht unterstützt.",
         "ExceptionSuperUserOauthDisabled": "OAuth Login für Superuser ist deaktiviert."
     }
 }
