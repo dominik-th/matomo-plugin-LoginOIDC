@@ -2,6 +2,8 @@
     "LoginOIDC":{
         "SettingDisableSuperuser": "Deaktiviere externen Login-Service für Superuser.",
         "SettingDisableSuperuserHelp": "",
+        "SettingAllowSignup": "Erstelle automatisch einen neuen Account, wenn sich ein unbekannter neuer Benutzer einloggt.",
+        "SettingAllowSignupHelp": "",
         "SettingAuthenticationName": "Name",
         "SettingAuthenticationNameHelp": "Name des externen Login-Services, der auf der Login-Seite angezeigt wird.",
         "SettingAuthorizeUrl": "Authorize URL",
@@ -31,6 +33,7 @@
         "ExceptionUnknownProvider": "Unbekannter OAuth-Service.",
         "ExceptionInvalidResponse": "Unerwartete Antwort vom OAuth-Service.",
         "ExceptionUserNotFoundAndSignupDisabled": "Benutzer nicht gefunden. Neue Registrierungen über OAuth werden nicht unterstützt.",
+        "ExceptionUserNotFoundAndNoEmail": "Benutzer nicht gefunden. Benutzer konnte nicht erstellt werden, weil der OAuth Service keine E-Mail Adresse zurückgab.",
         "ExceptionSuperUserOauthDisabled": "OAuth Login für Superuser ist deaktiviert."
     }
 }
