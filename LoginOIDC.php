@@ -86,11 +86,11 @@ class LoginOIDC extends \Piwik\Plugin
                 user VARCHAR( 100 ) NOT NULL,
                 provider_user VARCHAR( 255 ) NOT NULL,
                 provider VARCHAR( 255 ) NOT NULL,
-                date_connected TIMESTAMP NOT NULL,
+                date_connected TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                 PRIMARY KEY ( provider_user, provider ),
-                FOREIGN KEY ( user ) REFERENCES " . Common::prefixTable("user") . "( login ) ON DELETE CASCADE,
-                CONSTRAINT user_provider UNIQUE ( user, provider )
-                ) DEFAULT CHARSET=utf8";
+		UNIQUE KEY user_provider (user,provider),
+                CONSTRAINT ". Common::prefixTable("loginoidc_provider_ibkf_1") ." FOREIGN KEY (user) REFERENCES " . Common::prefixTable("user") . " (login) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
             Db::exec($sql);
         } catch(Exception $e) {
             // ignore error if table already exists (1050 code is for 'table already exists')
