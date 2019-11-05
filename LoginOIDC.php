@@ -88,8 +88,8 @@ class LoginOIDC extends \Piwik\Plugin
                 provider VARCHAR( 255 ) NOT NULL,
                 date_connected TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                 PRIMARY KEY ( provider_user, provider ),
-		UNIQUE KEY user_provider (user,provider),
-                CONSTRAINT ". Common::prefixTable("loginoidc_provider_ibkf_1") ." FOREIGN KEY (user) REFERENCES " . Common::prefixTable("user") . " (login) ON DELETE CASCADE
+                UNIQUE KEY user_provider ( user, provider ),
+                FOREIGN KEY ( user ) REFERENCES " . Common::prefixTable("user") . " ( login ) ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
             Db::exec($sql);
         } catch(Exception $e) {
