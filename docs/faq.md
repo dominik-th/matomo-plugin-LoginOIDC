@@ -50,6 +50,13 @@ __What are the settings for ...?__
   * Userinfo ID: `sub`
   * OAuth Scopes: `openid`
 
+* Gitlab (self-hosted Community Edition 12.6.2)
+  * Authorize URL: `https://<YOUR_GIT_DOMAIN>/oauth/authorize`
+  * Token URL: `https://<YOUR_GIT_DOMAIN>/oauth/token`
+  * Userinfo URL: `https://<YOUR_GIT_DOMAIN>o/oauth/userinfo`
+  * Userinfo ID: `sub`
+  * OAuth Scopes: `openid email`
+
 * Microsoft Azure AD
   * Authorize URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/authorize`
   * Token URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/token`
