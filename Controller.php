@@ -20,6 +20,7 @@ use Piwik\Piwik;
 use Piwik\Plugins\UsersManager\API as UsersManagerAPI;
 use Piwik\Plugins\UsersManager\Model;
 use Piwik\Session\SessionInitializer;
+use Piwik\Session\SessionFingerprint;
 use Piwik\Url;
 use Piwik\View;
 
@@ -243,7 +244,7 @@ class Controller extends \Piwik\Plugin\Controller
                     $userModel = new Model();
                     $user = $userModel->getUser($matomoUserLogin);
                     $this->linkAccount($providerUserId, $matomoUserLogin);
-                    $this->signinAndRedirect($user);
+                    $this->signinAndRedirect($user, $settings);
                 } else {
                     throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndSignupDisabled"));
                 }
@@ -258,7 +259,7 @@ class Controller extends \Piwik\Plugin\Controller
                 if ($settings->disableSuperuser->getValue() && Piwik::hasTheUserSuperUserAccess($user["login"])) {
                     throw new Exception(Piwik::translate("LoginOIDC_ExceptionSuperUserOauthDisabled"));
                 } else {
-                    $this->signinAndRedirect($user);
+                    $this->signinAndRedirect($user, $settings);
                 }
             } else {
                 Url::redirectToUrl("index.php");
@@ -304,11 +305,15 @@ class Controller extends \Piwik\Plugin\Controller
      * @param  array  $user
      * @return void
      */
-    private function signinAndRedirect(array $user)
+    private function signinAndRedirect(array $user, SystemSettings $settings)
     {
         $this->auth->setLogin($user["login"]);
         $this->auth->setTokenAuth($user["token_auth"]);
         $this->sessionInitializer->initSession($this->auth);
+        if ($settings->bypassTwoFa->getValue()) {
+            $sessionFingerprint = new SessionFingerprint();
+            $sessionFingerprint->setTwoFactorAuthenticationVerified();
+        }
         Url::redirectToUrl("index.php");
     }
 
