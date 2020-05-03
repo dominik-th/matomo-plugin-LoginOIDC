@@ -4,6 +4,8 @@
         "SettingDisableSuperuserHelp": "",
         "SettingAllowSignup": "Create new users when users try to log in with unknown OIDC accounts.",
         "SettingAllowSignupHelp": "",
+        "SettingBypassTwoFa": "Disable second factor when sign in with OIDC",
+        "SettingBypassTwoFaHelp": "",
         "SettingAuthenticationName": "Name",
         "SettingAuthenticationNameHelp": "Name of the authentication source which will be displayed on the login screen.",
         "SettingAuthorizeUrl": "Authorize URL",

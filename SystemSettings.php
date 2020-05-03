@@ -34,6 +34,11 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $allowSignup;
 
     /**
+     * Bypass 2nd factor when login with OIDC
+     */
+    public $bypassTwoFa;
+
+    /**
      * The name of the oauth provider, which is also shown on the login screen.
      *
      * @var string
@@ -105,6 +110,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     {
         $this->disableSuperuser = $this->createDisableSuperuserSetting();
         $this->allowSignup = $this->createAllowSignupSetting();
+        $this->bypassTwoFa = $this->createBypassTwoFaSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
@@ -140,6 +146,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("allowSignup", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingAllowSignup");
             $field->description = Piwik::translate("LoginOIDC_SettingAllowSignupHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add bypassTwoFa setting.
+     *
+     * @return SystemSetting
+     */
+    private function createBypassTwoFaSetting() : SystemSetting
+    {
+        return $this->makeSetting("bypassTwoFa", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingBypassTwoFa");
+            $field->description = Piwik::translate("LoginOIDC_SettingBypassTwoFaHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }

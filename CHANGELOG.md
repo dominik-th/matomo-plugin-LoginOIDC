@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.1.5
+* Add option to bypass second factor when sign in with OIDC
+
 ### 0.1.4
 
 * Add option to automatically create unknown users.
