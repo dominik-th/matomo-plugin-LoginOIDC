@@ -262,7 +262,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("clientSecret", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingClientSecret");
             $field->description = Piwik::translate("LoginOIDC_SettingClientSecretHelp");
-            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+            $field->uiControl = FieldConfig::UI_CONTROL_PASSWORD;
         });
     }
 
