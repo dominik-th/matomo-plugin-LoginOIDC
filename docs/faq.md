@@ -61,6 +61,15 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
 
+- [Unikname Connect](https://unikname.com)
+
+  - Name: `Connect with your private @unikname`
+  - Authorize URL: `https://connect.unikname.com/oidc/authorize`
+  - Token URL: `https://connect.unikname.com/oidc/accessToken`
+  - Userinfo URL: `https://connect.unikname.com/oidc/profile`
+  - Userinfo ID: `sub`
+  - OAuth Scopes: `openid email`
+
 - Microsoft Azure AD
   - Authorize URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/authorize`
   - Token URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/token`
