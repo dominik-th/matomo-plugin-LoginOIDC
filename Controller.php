@@ -233,29 +233,9 @@ class Controller extends \Piwik\Plugin\Controller
         $user = $this->getUserByRemoteId("oidc", $providerUserId);
 
         if (empty($user)) {
-            // user with the remote id is currently not in our database
             if (Piwik::isUserIsAnonymous()) {
-                if ($settings->allowSignup->getValue()) {
-                    if (empty($result->email)) {
-                        throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndNoEmail"));
-                    }
-
-                    $matomoUserLogin = $result->email;
-                    // Set an invalid pre-hashed password, to block the user from logging in by password
-                    Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $result) {
-                        UsersManagerApi::getInstance()->addUser($matomoUserLogin,
-                                                                "(disallow password login)",
-                                                                $result->email,
-                                                                /* $alias = */ false,
-                                                                /* $_isPasswordHashed = */ true);
-                    });
-                    $userModel = new Model();
-                    $user = $userModel->getUser($matomoUserLogin);
-                    $this->linkAccount($providerUserId, $matomoUserLogin);
-                    $this->signinAndRedirect($user, $settings);
-                } else {
-                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndSignupDisabled"));
-                }
+                // user with the remote id is currently not in our database
+                $this->signupUser($settings, $providerUserId, $result->email);
             } else {
                 // link current user with the remote user
                 $this->linkAccount($providerUserId);
@@ -305,6 +285,48 @@ class Controller extends \Piwik\Plugin\Controller
             && !empty($settings->userinfoUrl->getValue())
             && !empty($settings->clientId->getValue())
             && !empty($settings->clientSecret->getValue());
+    }
+
+    /**
+     * Sign up a new user and link him with a given remote user id.
+     *
+     * @param  SystemSettings  $settings
+     * @param  string          $providerUserId   Remote user id
+     * @param  string          $matomoUserLogin  Users email address, will be used as username as well
+     * @return void
+     */
+    private function signupUser($settings, string $providerUserId, string $matomoUserLogin = null) {
+        // only sign up user if setting is enabled
+        if ($settings->allowSignup->getValue()) {
+            // verify response contains email address
+            if (empty($matomoUserLogin)) {
+                throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndNoEmail"));
+            }
+
+            // verify email address domain is allowed to sign up
+            if (!empty($settings->allowedSignupDomains->getValue())) {
+                $signupDomain = substr($matomoUserLogin, strpos($matomoUserLogin, "@") + 1);
+                $allowedDomains = explode("\n", $settings->allowedSignupDomains->getValue());
+                if (!in_array($signupDomain, $allowedDomains)) {
+                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionAllowedSignupDomainsDenied"));
+                }
+            }
+
+            // set an invalid pre-hashed password, to block the user from logging in by password
+            Access::getInstance()->doAsSuperUser(function () use ($matomoUserLogin, $result) {
+                UsersManagerApi::getInstance()->addUser($matomoUserLogin,
+                                                        "(disallow password login)",
+                                                        $matomoUserLogin,
+                                                        /* $alias = */ false,
+                                                        /* $_isPasswordHashed = */ true);
+            });
+            $userModel = new Model();
+            $user = $userModel->getUser($matomoUserLogin);
+            $this->linkAccount($providerUserId, $matomoUserLogin);
+            $this->signinAndRedirect($user, $settings);
+        } else {
+            throw new Exception(Piwik::translate("LoginOIDC_ExceptionUserNotFoundAndSignupDisabled"));
+        }
     }
 
     /**

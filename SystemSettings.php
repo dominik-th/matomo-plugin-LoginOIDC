@@ -109,6 +109,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $redirectUriOverride;
 
     /**
+     * The domains which are allowed to create accounts.
+     *
+     * @var string
+     */
+    public $allowedSignupDomains;
+
+    /**
      * Initialize the plugin settings.
      *
      * @return void
@@ -128,6 +135,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
+        $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
     }
 
     /**
@@ -313,6 +321,30 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->title = Piwik::translate("LoginOIDC_SettingRedirectUriOverride");
             $field->description = Piwik::translate("LoginOIDC_SettingRedirectUriOverrideHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_URL;
+        });
+    }
+
+    /**
+     * Add allowed signup domains setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAllowedSignupDomainsSetting() : SystemSetting
+    {
+        return $this->makeSetting("allowedSignupDomains", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAllowedSignupDomains");
+            $field->description = Piwik::translate("LoginOIDC_SettingAllowedSignupDomainsHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
+            $field->validate = function ($value, $setting) {
+                $domainPattern = "/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/";
+                $domains = explode("\n", $value);
+                foreach($domains as $domain) {
+                    $isValidDomain = preg_match($domainPattern, $domain);
+                    if (!$isValidDomain) {
+                        throw new Exception(Piwik::translate("LoginOIDC_ExceptionAllowedSignupDomainsValidationFailed"));
+                    }
+                }
+            };
         });
     }
 }

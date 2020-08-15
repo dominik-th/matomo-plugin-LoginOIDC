@@ -3,6 +3,7 @@
 ### 3.0.0
 * Align version number with Matomo major release version
 * Support embedding login button on third-party sites
+* Restrict account creation to specified domains
 
 ### 0.1.5
 * Add option to bypass second factor when sign in with OIDC

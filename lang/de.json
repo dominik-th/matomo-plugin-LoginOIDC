@@ -24,6 +24,8 @@
         "SettingScopeHelp": "z.B. 'openid' oder 'openid email'",
         "SettingRedirectUriOverride": "Benutzerdefinierte Redirect URI",
         "SettingRedirectUriOverrideHelp": "In manchen Fällen ist es nützlich, die Redirect URI, die an den OpenID Connect Provider übergeben wird, zu überschreiben. Bei Unklarheit sollte dieses Feld freigelassen werden.",
+        "SettingAllowedSignupDomains": "Erlaubte Domains für Accounterstellung",
+        "SettingAllowedSignupDomainsHelp": "Wenn das Feld freigelassen wird, können sich Benutzer mit beliebiger E-Mail Adresse registrieren. Mehrere Domains können in separaten Zeilen angegeben werden.",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "Dies erlaubt es Dir, Dich über einen externen Service bei Matomo einzuloggen.",
         "AccountLinked": "Dein Account ist zur Zeit verknüpft (Entfernte Benutzer-ID: %1$s).",
@@ -36,6 +38,8 @@
         "ExceptionInvalidResponse": "Unerwartete Antwort vom OAuth-Service.",
         "ExceptionUserNotFoundAndSignupDisabled": "Benutzer nicht gefunden. Neue Registrierungen über OAuth werden nicht unterstützt.",
         "ExceptionUserNotFoundAndNoEmail": "Benutzer nicht gefunden. Benutzer konnte nicht erstellt werden, weil der OAuth Service keine E-Mail Adresse zurückgab.",
-        "ExceptionSuperUserOauthDisabled": "OAuth Login für Superuser ist deaktiviert."
+        "ExceptionSuperUserOauthDisabled": "OAuth Login für Superuser ist deaktiviert.",
+        "ExceptionAllowedSignupDomainsValidationFailed": "Die Liste der zugelassenen Domains hat nicht das richtige Format.",
+        "ExceptionAllowedSignupDomainsDenied": "Die verwendete Domain ist nicht für Registrierungen freigeschaltet."
     }
 }

@@ -26,6 +26,8 @@
         "SettingScopeHelp": "e.g. 'openid' or 'openid email'",
         "SettingRedirectUriOverride": "Redirect URI override",
         "SettingRedirectUriOverrideHelp": "In some cases it might be useful to manipulate the redirect uri which is given to the OpenID Connect provider. If you are unsure, just leave this field empty.",
+        "SettingAllowedSignupDomains": "Restrict user creation to domains",
+        "SettingAllowedSignupDomainsHelp": "List of email domains which should be allowed to create new accounts. Multiple domains have to be separated by line breaks. When empty, any email domain will be accepted.",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "This allows you to sign in using an external authentication service.",
         "AccountLinked": "Your account is currently linked (Remote User ID: %1$s).",
@@ -38,6 +40,8 @@
         "ExceptionInvalidResponse": "Unexpected response from OAuth service.",
         "ExceptionUserNotFoundAndSignupDisabled": "User not found. OAuth registrations are disabled.",
         "ExceptionUserNotFoundAndNoEmail": "User not found. User could not be created because the OAuth service did not return an email address.",
-        "ExceptionSuperUserOauthDisabled": "OAuth login disabled for superusers."
+        "ExceptionSuperUserOauthDisabled": "OAuth login disabled for superusers.",
+        "ExceptionAllowedSignupDomainsValidationFailed": "Validation failed for the list of domains allowed for user creation.",
+        "ExceptionAllowedSignupDomainsDenied": "The domain is currently not activated for account creation."
     }
 }
