@@ -124,13 +124,21 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function signin()
     {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
+
+        $allowedMethods = array("POST");
+        if (!$settings->disableDirectLoginUrl->getValue()) {
+            array_push($allowedMethods, "GET");
+        }
+        if (!in_array($_SERVER["REQUEST_METHOD"], $allowedMethods)) {
             throw new Exception(Piwik::translate("LoginOIDC_MethodNotAllowed"));
         }
-        // csrf protection
-        Nonce::checkNonce(self::OIDC_NONCE, $_POST["form_nonce"]);
 
-        $settings = new \Piwik\Plugins\LoginOIDC\SystemSettings();
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            // csrf protection
+            Nonce::checkNonce(self::OIDC_NONCE, $_POST["form_nonce"]);
+        }
+
         if (!$this->isPluginSetup($settings)) {
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionNotConfigured"));
         }

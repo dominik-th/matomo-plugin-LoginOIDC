@@ -1,8 +1,10 @@
 {
     "LoginOIDC": {
-        "SettingDisableSuperuser": "Désactiver la connexion externe des Super Utilisateurs.",
+        "SettingDisableSuperuser": "Désactiver la connexion externe des Super Utilisateurs",
         "SettingDisableSuperuserHelp": "",
-        "SettingAllowSignup": "Créer une nouveau compte utilisateur quand les utilisateurs tentent de se connecter avec un compte OIDC inconnu.",
+        "SettingDisableDirectLoginUrl": "Désactiver l'url de connexion directe",
+        "SettingDisableDirectLoginUrlHelp": "",
+        "SettingAllowSignup": "Créer une nouveau compte utilisateur quand les utilisateurs tentent de se connecter avec un compte OIDC inconnu",
         "SettingAllowSignupHelp": "",
         "SettingBypassTwoFa": "Désactiver le 2è facteur lors d'une connexion avec OIDC",
         "SettingBypassTwoFaHelp": "",

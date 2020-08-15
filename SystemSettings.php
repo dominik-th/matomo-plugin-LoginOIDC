@@ -27,6 +27,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $disableSuperuser;
 
     /**
+     * Whether the login procedure has to be initiated from the Matomo login page
+     *
+     * @var bool
+     */
+    public $disableDirectLoginUrl;
+
+    /**
      * Whether new Matomo accounts should be created for unknown users
      *
      * @var bool
@@ -109,6 +116,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     protected function init()
     {
         $this->disableSuperuser = $this->createDisableSuperuserSetting();
+        $this->disableDirectLoginUrl = $this->createDisableDirectLoginUrlSetting();
         $this->allowSignup = $this->createAllowSignupSetting();
         $this->bypassTwoFa = $this->createBypassTwoFaSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
@@ -132,6 +140,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("disableSuperuser", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingDisableSuperuser");
             $field->description = Piwik::translate("LoginOIDC_SettingDisableSuperuserHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add disable direct login url setting.
+     *
+     * @return SystemSetting
+     */
+    private function createDisableDirectLoginUrlSetting() : SystemSetting
+    {
+        return $this->makeSetting("disableDirectLoginUrl", $default = true, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingDisableDirectLoginUrl");
+            $field->description = Piwik::translate("LoginOIDC_SettingDisableDirectLoginUrlHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }

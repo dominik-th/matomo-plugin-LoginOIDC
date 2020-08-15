@@ -2,7 +2,7 @@
 
 **What is the callback url?**
 
-http(s)://<YOUR_MATOMO_URL>/index.php?module=LoginOIDC&action=callback&provider=oidc
+`http(s)://<YOUR_MATOMO_URL>/index.php?module=LoginOIDC&action=callback&provider=oidc`
 
 **Which providers can I use?**
 
@@ -15,6 +15,11 @@ The easiest way is to fully uninstall the plugin and reinstall afterwards.
 Otherwise you can delete data from `matomo_loginoidc_provider` in your sql database.
 
 If you change the OAuth provider and there could be user id collisions, you should make sure to unlink all users beforehand.
+
+**Can I embed the Login button on another website?**
+
+You have to uncheck the `Disable direct login url` option in the settings.
+Afterwards you can link to `http(s)://<YOUR_MATOMO_URL>/index.php?module=LoginOIDC&action=signin&provider=oidc` and Matomo will redirect the client accordingly.
 
 **Can I setup more than one provider?**
 
@@ -47,21 +52,21 @@ https://matomo.org/faq/troubleshooting/faq_25610/
 
 - Keycloak:
 
-  - Authorize URL: `http(s)://<YOUR_KEYCLOAK_INSTALLATION>/auth/realms/<REALM>/protocol/openid-connect/auth`
-  - Token URL: `http(s)://<YOUR_KEYCLOAK_INSTALLATION>/auth/realms/<REALM>/protocol/openid-connect/token`
-  - Userinfo URL: `http(s)://<YOUR_KEYCLOAK_INSTALLATION>/auth/realms/<REALM>/protocol/openid-connect/userinfo`
+  - Authorize URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/auth`
+  - Token URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/token`
+  - Userinfo URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/userinfo`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid`
 
-- Gitlab (self-hosted Community Edition 12.6.2)
+- Gitlab (self-hosted Community Edition 12.6.2):
 
-  - Authorize URL: `http(s)://<YOUR_GIT_DOMAIN>/oauth/authorize`
-  - Token URL: `http(s)://<YOUR_GIT_DOMAIN>/oauth/token`
-  - Userinfo URL: `http(s)://<YOUR_GIT_DOMAIN>/oauth/userinfo`
+  - Authorize URL: `http(s)://<YOUR_GITLAB_URL>/oauth/authorize`
+  - Token URL: `http(s)://<YOUR_GITLAB_URL>/oauth/token`
+  - Userinfo URL: `http(s)://<YOUR_GITLAB_URL>/oauth/userinfo`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
 
-- [Unikname Connect](https://unikname.com)
+- Unikname Connect:
 
   - Name: `Connect with your private @unikname`
   - Authorize URL: `https://connect.unikname.com/oidc/authorize`
@@ -76,7 +81,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Userinfo URL: `https://login.microsoftonline.com/{tenant_id}/openid/userinfo`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid`
-  - Redirect URI Override\*: `http(s)://<YOUR_MATOMO_INSTALLATION>/oidc/callback`
+  - Redirect URI Override\*: `http(s)://<YOUR_MATOMO_URL>/oidc/callback`
 
 \*because Microsoft Azure AD does not allow query parameters in the redirect URI we also have to edit our nginx configuration to work around this limitation:
 

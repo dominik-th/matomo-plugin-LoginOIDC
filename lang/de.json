@@ -1,8 +1,10 @@
 {
     "LoginOIDC": {
-        "SettingDisableSuperuser": "Deaktiviere externen Login-Service für Superuser.",
+        "SettingDisableSuperuser": "Deaktiviere externen Login-Service für Superuser",
         "SettingDisableSuperuserHelp": "",
-        "SettingAllowSignup": "Erstelle automatisch einen neuen Account, wenn sich ein unbekannter neuer Benutzer einloggt.",
+        "SettingDisableDirectLoginUrl": "Deaktiviere direkten Login Link",
+        "SettingDisableDirectLoginUrlHelp": "Wenn der Haken gesetzt ist muss der Login über die Login-Seite initiiert werden, anderenfalls lässt sich die Loginschaltfläche auch von dritten Seiten einbinden.",
+        "SettingAllowSignup": "Erstelle automatisch einen neuen Account, wenn sich ein unbekannter neuer Benutzer einloggt",
         "SettingAllowSignupHelp": "",
         "SettingAuthenticationName": "Name",
         "SettingAuthenticationNameHelp": "Name des externen Login-Services, der auf der Login-Seite angezeigt wird.",
