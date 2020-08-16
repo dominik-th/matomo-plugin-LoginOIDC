@@ -14,6 +14,8 @@
         "SettingTokenUrlHelp": "z.B. https://<USERNAME>.eu.auth0.com/oauth/token",
         "SettingUserinfoUrl": "Userinfo URL",
         "SettingUserinfoUrlHelp": "z.B. https://<USERNAME>.eu.auth0.com/userinfo",
+        "SettingEndSessionUrl": "Logout URL",
+        "SettingEndSessionUrlHelp": "Nach dem Logout wird der Benutzer zu dieser URL weitergeleitet, damit die Session beim Provider beendet wird. Bei Unklarheit sollte dieses Feld freigelassen werden.",
         "SettingUserinfoId": "Userinfo ID",
         "SettingUserinfoIdHelp": "Name des Feldes, in dem die Benutzer-ID enthalten ist. Normalerweise, für OpenID Connect Dienste wie Auth0, ist das 'sub'. Github gibt die eindeutige Benutzer-ID in dem Feld 'id' an.",
         "SettingClientId": "Client ID",

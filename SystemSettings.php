@@ -74,6 +74,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $userinfoUrl;
 
     /**
+     * The url where the OIDC provider will invalidate the users session.
+     *
+     * @var string
+     */
+    public $endSessionUrl;
+
+    /**
      * The name of the unique user id field in $userinfoUrl response.
      *
      * @var string
@@ -130,6 +137,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
         $this->userinfoUrl = $this->createUserinfoUrlSetting();
+        $this->endSessionUrl = $this->createEndSessionUrlSetting();
         $this->userinfoId = $this->createUserinfoIdSetting();
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
@@ -250,6 +258,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->description = Piwik::translate("LoginOIDC_SettingUserinfoUrlHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_URL;
             $field->validators[] = new UrlLike();
+        });
+    }
+
+    /**
+     * Add end session url setting.
+     *
+     * @return SystemSetting
+     */
+    private function createEndSessionUrlSetting() : SystemSetting
+    {
+        return $this->makeSetting("endSessionUrl", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingEndSessionUrl");
+            $field->description = Piwik::translate("LoginOIDC_SettingEndSessionUrlHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_URL;
         });
     }
 

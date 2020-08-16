@@ -13,14 +13,16 @@ use Exception;
 use Piwik\Access;
 use Piwik\Auth;
 use Piwik\Common;
+use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Db;
 use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\UsersManager\API as UsersManagerAPI;
 use Piwik\Plugins\UsersManager\Model;
-use Piwik\Session\SessionInitializer;
+use Piwik\Session;
 use Piwik\Session\SessionFingerprint;
+use Piwik\Session\SessionInitializer;
 use Piwik\Url;
 use Piwik\View;
 
@@ -210,6 +212,10 @@ class Controller extends \Piwik\Plugin\Controller
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));
         }
 
+        Session::rememberMe(Config::getInstance()->General['login_cookie_expire']);
+        $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
+        $_SESSION['loginoidc_auth'] = true;
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             "Authorization: Bearer " . $result->access_token,
@@ -295,7 +301,8 @@ class Controller extends \Piwik\Plugin\Controller
      * @param  string          $matomoUserLogin  Users email address, will be used as username as well
      * @return void
      */
-    private function signupUser($settings, string $providerUserId, string $matomoUserLogin = null) {
+    private function signupUser($settings, string $providerUserId, string $matomoUserLogin = null)
+    {
         // only sign up user if setting is enabled
         if ($settings->allowSignup->getValue()) {
             // verify response contains email address

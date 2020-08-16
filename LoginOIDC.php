@@ -11,8 +11,11 @@ namespace Piwik\Plugins\LoginOIDC;
 
 use Exception;
 use Piwik\Common;
+use Piwik\Config;
 use Piwik\Db;
 use Piwik\FrontController;
+use Piwik\Plugins\LoginOIDC\SystemSettings;
+use Piwik\Plugins\LoginOIDC\Url;
 
 class LoginOIDC extends \Piwik\Plugin
 {
@@ -27,7 +30,8 @@ class LoginOIDC extends \Piwik\Plugin
         return array(
             "AssetManager.getStylesheetFiles" => "getStylesheetFiles",
             "Template.userSettings.afterTokenAuth" => "renderLoginOIDCUserSettings",
-            "Template.loginNav" => "renderLoginOIDCMod"
+            "Template.loginNav" => "renderLoginOIDCMod",
+            "Login.logout" => "logoutMod"
         );
     }
 
@@ -70,6 +74,28 @@ class LoginOIDC extends \Piwik\Plugin
             if (!empty($content)) {
                 $out .= $content;
             }
+        }
+    }
+
+    /**
+     * Temporarily override logout url to the oidc provider end user session endpoint.
+     *
+     * @return void
+     */
+    public function logoutMod() {
+        $settings = new SystemSettings();
+        $endSessionUrl = $settings->endSessionUrl->getValue();
+        throw new Exception(json_encode($_SESSION));
+        if (!empty($endSessionUrl) && $_SESSION["loginoidc_auth"]) {
+            $endSessionUrl = new Url($endSessionUrl);
+            if (isset($_SESSION[loginoidc_idtoken])) {
+                $endSessionUrl->setQueryParameter("id_token_hint", $_SESSION[loginoidc_idtoken]);
+            }
+            $originalLogoutUrl = Config::getInstance()->General['login_logout_url'];
+            if ($originalLogoutUrl) {
+                $endSessionUrl->setQueryParameter("post_logout_redirect_uri", $originalLogoutUrl);
+            }
+            Config::getInstance()->General['login_logout_url'] = $endSessionUrl->buildString();
         }
     }
 
