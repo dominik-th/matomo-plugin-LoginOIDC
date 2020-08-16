@@ -82,10 +82,10 @@ class LoginOIDC extends \Piwik\Plugin
      *
      * @return void
      */
-    public function logoutMod() {
+    public function logoutMod()
+    {
         $settings = new SystemSettings();
         $endSessionUrl = $settings->endSessionUrl->getValue();
-        throw new Exception(json_encode($_SESSION));
         if (!empty($endSessionUrl) && $_SESSION["loginoidc_auth"]) {
             $endSessionUrl = new Url($endSessionUrl);
             if (isset($_SESSION[loginoidc_idtoken])) {
