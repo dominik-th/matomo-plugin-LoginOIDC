@@ -20,7 +20,6 @@ use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\UsersManager\API as UsersManagerAPI;
 use Piwik\Plugins\UsersManager\Model;
-use Piwik\Session;
 use Piwik\Session\SessionFingerprint;
 use Piwik\Session\SessionInitializer;
 use Piwik\Url;
@@ -212,7 +211,6 @@ class Controller extends \Piwik\Plugin\Controller
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));
         }
 
-        Session::rememberMe(Config::getInstance()->General['login_cookie_expire']);
         $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
         $_SESSION['loginoidc_auth'] = true;
 

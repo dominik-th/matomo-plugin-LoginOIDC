@@ -16,6 +16,7 @@ use Piwik\Db;
 use Piwik\FrontController;
 use Piwik\Plugins\LoginOIDC\SystemSettings;
 use Piwik\Plugins\LoginOIDC\Url;
+use Piwik\Session;
 
 class LoginOIDC extends \Piwik\Plugin
 {
@@ -28,11 +29,39 @@ class LoginOIDC extends \Piwik\Plugin
     public function registerEvents() : array
     {
         return array(
+            "Session.beforeSessionStart" => "beforeSessionStart",
             "AssetManager.getStylesheetFiles" => "getStylesheetFiles",
             "Template.userSettings.afterTokenAuth" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
             "Login.logout" => "logoutMod"
         );
+    }
+
+    /**
+     * Create RememberMe cookie.
+     * @see \Piwik\Plugins\Login::beforeSessionStart
+     *
+     * @return void
+     */
+    public function beforeSessionStart() : void
+    {
+        if (!$this->shouldHandleRememberMe()) {
+            return;
+        }
+        Session::rememberMe(Config::getInstance()->General["login_cookie_expire"]);
+    }
+
+    /**
+     * Decide if RememberMe cookie should be handled by the plugin.
+     * @see \Piwik\Plugins\Login::shouldHandleRememberMe
+     *
+     * @return bool
+     */
+    private function shouldHandleRememberMe() : bool
+    {
+        $module = Common::getRequestVar("module", false);
+        $action = Common::getRequestVar("action", false);
+        return ($module == "LoginOIDC") && ($action == "callback");
     }
 
     /**
