@@ -43,7 +43,8 @@
         "ExceptionUserNotFoundAndSignupDisabled": "Utilisateur non trouvé. Les nouvelles inscriptions via OAuth sont désactivées.",
         "ExceptionUserNotFoundAndNoEmail": "Utilisateur non trouvé. L'utilisateur n'a pas pu être créé car le service OAuth n'a pas renvoyé d'adresse e-mail.",
         "ExceptionSuperUserOauthDisabled": "La connexion OAuth pour les Supers Utilisateurs est désactivée.",
-        "ExceptionAllowedSignupDomainsValidationFailed": "La validation a échoué pour la liste des domaines autorisés pour la création d'utilisateurs",
-        "ExceptionAllowedSignupDomainsDenied": "Le domaine n'est pas activé pour la création d'un compte"
+        "ExceptionAllowedSignupDomainsValidationFailed": "La validation a échoué pour la liste des domaines autorisés pour la création d'utilisateurs.",
+        "ExceptionAllowedSignupDomainsDenied": "Le domaine n'est pas activé pour la création d'un compte.",
+        "ExceptionAlreadyLinkedToDifferentAccount": "L'utilisateur OAuth distant est déjà lié à un autre compte."
     }
 }

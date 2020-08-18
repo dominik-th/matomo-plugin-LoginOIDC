@@ -44,6 +44,7 @@
         "ExceptionUserNotFoundAndNoEmail": "User not found. User could not be created because the OAuth service did not return an email address.",
         "ExceptionSuperUserOauthDisabled": "OAuth login disabled for superusers.",
         "ExceptionAllowedSignupDomainsValidationFailed": "Validation failed for the list of domains allowed for user creation.",
-        "ExceptionAllowedSignupDomainsDenied": "The domain is currently not activated for account creation."
+        "ExceptionAllowedSignupDomainsDenied": "The domain is currently not activated for account creation.",
+        "ExceptionAlreadyLinkedToDifferentAccount": "The remote OAuth user is already linked to another account."
     }
 }

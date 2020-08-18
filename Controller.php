@@ -50,6 +50,13 @@ class Controller extends \Piwik\Plugin\Controller
     protected $sessionInitializer;
 
     /**
+     * Revalidates user authentication.
+     *
+     * @var PasswordVerifier
+     */
+    protected $passwordVerify;
+
+    /**
      * Constructor.
      *
      * @param Auth                $auth
@@ -68,6 +75,11 @@ class Controller extends \Piwik\Plugin\Controller
             $sessionInitializer = new SessionInitializer();
         }
         $this->sessionInitializer = $sessionInitializer;
+
+        if (empty($passwordVerify)) {
+            $passwordVerify = StaticContainer::get("Piwik\Plugins\Login\PasswordVerifier");
+        }
+        $this->passwordVerify = $passwordVerify;
     }
 
     /**
@@ -254,7 +266,12 @@ class Controller extends \Piwik\Plugin\Controller
                     $this->signinAndRedirect($user, $settings);
                 }
             } else {
-                Url::redirectToUrl("index.php");
+                if (Piwik::getCurrentUserLogin() === $user["login"]) {
+                    $this->passwordVerify->setPasswordVerifiedCorrectly();
+                    return;
+                } else {
+                    throw new Exception(Piwik::translate("LoginOIDC_ExceptionAlreadyLinkedToDifferentAccount"));
+                }
             }
         }
     }

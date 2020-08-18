@@ -42,6 +42,7 @@
         "ExceptionUserNotFoundAndNoEmail": "Benutzer nicht gefunden. Benutzer konnte nicht erstellt werden, weil der OAuth Service keine E-Mail Adresse zurückgab.",
         "ExceptionSuperUserOauthDisabled": "OAuth Login für Superuser ist deaktiviert.",
         "ExceptionAllowedSignupDomainsValidationFailed": "Die Liste der zugelassenen Domains hat nicht das richtige Format.",
-        "ExceptionAllowedSignupDomainsDenied": "Die verwendete Domain ist nicht für Registrierungen freigeschaltet."
+        "ExceptionAllowedSignupDomainsDenied": "Die verwendete Domain ist nicht für Registrierungen freigeschaltet.",
+        "ExceptionAlreadyLinkedToDifferentAccount": "Der Benutzer beim OAuth-Service ist bereits mit einem anderem Matomo-Nutzer verlinkt."
     }
 }

@@ -5,6 +5,7 @@
 * Support embedding login button on third-party sites.
 * Restrict account creation to specified domains.
 * Support [OIDC Logout URLs](https://openid.net/specs/openid-connect-session-1_0-17.html#RPLogout).
+* Support Matomos regular password verification (currently requires modification of plugins/Login/templates/confirmPassword.twig)
 
 ### 0.1.5
 * Add option to bypass second factor when sign in with OIDC.
