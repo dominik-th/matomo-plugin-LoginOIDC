@@ -48,7 +48,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Token URL: `https://<USERNAME>.eu.auth0.com/oauth/token`
   - Userinfo URL: `https://<USERNAME>.eu.auth0.com/userinfo`
   - Userinfo ID: `sub`
-  - OAuth Scopes: `openid`
+  - OAuth Scopes: `openid email`
 
 - Keycloak:
 
@@ -56,7 +56,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Token URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/token`
   - Userinfo URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/userinfo`
   - Userinfo ID: `sub`
-  - OAuth Scopes: `openid`
+  - OAuth Scopes: `openid email`
 
 - Gitlab (self-hosted Community Edition 12.6.2):
 
@@ -76,19 +76,8 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - OAuth Scopes: `openid email`
 
 - Microsoft Azure AD
-  - Authorize URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/authorize`
-  - Token URL: `https://login.microsoftonline.com/{tenant_id}/oauth2/token`
-  - Userinfo URL: `https://login.microsoftonline.com/{tenant_id}/openid/userinfo`
+  - Authorize URL: `https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/authorize`
+  - Token URL: `https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/token`
+  - Userinfo URL: `https://graph.microsoft.com/oidc/userinfo`
   - Userinfo ID: `sub`
-  - OAuth Scopes: `openid`
-  - Redirect URI Override\*: `http(s)://<YOUR_MATOMO_URL>/oidc/callback`
-
-\*because Microsoft Azure AD does not allow query parameters in the redirect URI we also have to edit our nginx configuration to work around this limitation:
-
-```nginx
-server {
-    # ...
-    rewrite ^/oidc/callback /index.php?module=LoginOIDC&action=callback&provider=oidc redirect;
-    # ...
-}
-```
+  - OAuth Scopes: `openid email`
