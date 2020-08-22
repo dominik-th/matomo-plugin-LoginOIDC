@@ -67,7 +67,7 @@ class Controller extends \Piwik\Plugin\Controller
         parent::__construct();
 
         if (empty($auth)) {
-            $auth = StaticContainer::get("Piwik\Auth");
+            $auth = StaticContainer::get("Piwik\Plugins\LoginOIDC\Auth");
         }
         $this->auth = $auth;
 
@@ -127,7 +127,7 @@ class Controller extends \Piwik\Plugin\Controller
         $sql = "DELETE FROM " . Common::prefixTable("loginoidc_provider") . " WHERE user=? AND provider=?";
         $bind = array(Piwik::getCurrentUserLogin(), "oidc");
         Db::query($sql, $bind);
-        $this->redirectToIndex("UsersManager", "userSettings");
+        $this->redirectToIndex("UsersManager", "userSecurity");
     }
 
     /**
@@ -255,7 +255,7 @@ class Controller extends \Piwik\Plugin\Controller
             } else {
                 // link current user with the remote user
                 $this->linkAccount($providerUserId);
-                $this->redirectToIndex("UsersManager", "userSettings");
+                $this->redirectToIndex("UsersManager", "userSecurity");
             }
         } else {
             // users identity has been successfully confirmed by the remote oidc server
@@ -360,7 +360,7 @@ class Controller extends \Piwik\Plugin\Controller
     private function signinAndRedirect(array $user, SystemSettings $settings)
     {
         $this->auth->setLogin($user["login"]);
-        $this->auth->setTokenAuth($user["token_auth"]);
+        $this->auth->setForceLogin(true);
         $this->sessionInitializer->initSession($this->auth);
         if ($settings->bypassTwoFa->getValue()) {
             $sessionFingerprint = new SessionFingerprint();

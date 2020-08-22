@@ -31,7 +31,7 @@ class LoginOIDC extends \Piwik\Plugin
         return array(
             "Session.beforeSessionStart" => "beforeSessionStart",
             "AssetManager.getStylesheetFiles" => "getStylesheetFiles",
-            "Template.userSettings.afterTokenAuth" => "renderLoginOIDCUserSettings",
+            "Template.userSecurity.afterPassword" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
             "Template.confirmPasswordContent" => "renderLoginOIDCMod",
             "Login.logout" => "logoutMod"

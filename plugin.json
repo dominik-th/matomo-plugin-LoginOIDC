@@ -1,6 +1,6 @@
 {
     "name": "LoginOIDC",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "description": "Adds support for integrating external authentication services",
     "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"],
     "license": "GPL v3+",
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "piwik": ">=3.8.0-b4,<4.0.0-b1",
+        "piwik": ">=4.0.0-b1,<5.0.0-b1",
         "php": ">=7.0.0"
     },
     "donate": {
