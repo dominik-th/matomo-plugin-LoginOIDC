@@ -112,6 +112,17 @@ class Controller extends \Piwik\Plugin\Controller
     }
 
     /**
+     * Render the oauth login button when current user is linked to a remote user.
+     *
+     * @return string|null
+     */
+    public function confirmPasswordMod() : ?string
+    {
+        $providerUser = $this->getProviderUser("oidc");
+        return empty($providerUser) ? null : $this->loginMod();
+    }
+
+    /**
      * Remove link between the currently signed user and the remote user.
      *
      * @return void

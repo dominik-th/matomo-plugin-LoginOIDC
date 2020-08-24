@@ -33,7 +33,7 @@ class LoginOIDC extends \Piwik\Plugin
             "AssetManager.getStylesheetFiles" => "getStylesheetFiles",
             "Template.userSecurity.afterPassword" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
-            "Template.confirmPasswordContent" => "renderLoginOIDCMod",
+            "Template.confirmPasswordContent" => "renderConfirmPasswordMod",
             "Login.logout" => "logoutMod"
         );
     }
@@ -101,6 +101,23 @@ class LoginOIDC extends \Piwik\Plugin
     {
         if (!empty($payload) && $payload === "bottom") {
             $content = FrontController::getInstance()->dispatch("LoginOIDC", "loginMod");
+            if (!empty($content)) {
+                $out .= $content;
+            }
+        }
+    }
+
+    /**
+     * Append login oauth button layout.
+     *
+     * @param  string       $out
+     * @param  string|null  $payload
+     * @return void
+     */
+    public function renderConfirmPasswordMod(string &$out, string $payload = null)
+    {
+        if (!empty($payload) && $payload === "bottom") {
+            $content = FrontController::getInstance()->dispatch("LoginOIDC", "confirmPasswordMod");
             if (!empty($content)) {
                 $out .= $content;
             }
