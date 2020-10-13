@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\LoginOIDC;
 
+use \Exception;
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Settings\Plugin\SystemSetting;
