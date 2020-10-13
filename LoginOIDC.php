@@ -9,7 +9,7 @@
 
 namespace Piwik\Plugins\LoginOIDC;
 
-use Exception;
+use \Exception;
 use Piwik\Common;
 use Piwik\Config;
 use Piwik\Db;
