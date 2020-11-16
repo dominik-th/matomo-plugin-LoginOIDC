@@ -163,7 +163,7 @@ class LoginOIDC extends \Piwik\Plugin
                 PRIMARY KEY ( provider_user, provider ),
                 UNIQUE KEY user_provider ( user, provider ),
                 FOREIGN KEY ( user ) REFERENCES " . Common::prefixTable("user") . " ( login ) ON DELETE CASCADE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+                ) ENGINE=InnoDB";
             Db::exec($sql);
         } catch(Exception $e) {
             // ignore error if table already exists (1050 code is for 'table already exists')
