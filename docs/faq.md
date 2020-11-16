@@ -55,6 +55,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Authorize URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/auth`
   - Token URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/token`
   - Userinfo URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/userinfo`
+  - Logout URL: `http(s)://<YOUR_KEYCLOAK_URL>/auth/realms/<REALM>/protocol/openid-connect/logout?redirect_uri=<MATOMO_URL>`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
 
