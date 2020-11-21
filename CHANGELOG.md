@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.0.1
+* Hotfix saving plugin system settings with empty domain whitelist (#34)
+
 ### 3.0.0
 * Align version number with Matomo major release version.
 * Support embedding login button on third-party sites.
