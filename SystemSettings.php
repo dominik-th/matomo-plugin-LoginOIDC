@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\LoginOIDC;
 
+use Exception;
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Settings\Plugin\SystemSetting;
@@ -358,6 +359,9 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->description = Piwik::translate("LoginOIDC_SettingAllowedSignupDomainsHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
             $field->validate = function ($value, $setting) {
+                if (empty($value)) {
+                    return;
+                }
                 $domainPattern = "/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/";
                 $domains = explode("\n", $value);
                 foreach($domains as $domain) {
