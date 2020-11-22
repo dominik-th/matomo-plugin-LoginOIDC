@@ -350,8 +350,8 @@ class Controller extends \Piwik\Plugin\Controller
                 UsersManagerApi::getInstance()->addUser($matomoUserLogin,
                                                         "(disallow password login)",
                                                         $matomoUserLogin,
-                                                        /* $alias = */ false,
-                                                        /* $_isPasswordHashed = */ true);
+                                                        /* $_isPasswordHashed = */ true,
+                                                        /* $initialIdSite = */ null);
             });
             $userModel = new Model();
             $user = $userModel->getUser($matomoUserLogin);

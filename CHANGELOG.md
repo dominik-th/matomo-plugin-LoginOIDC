@@ -1,7 +1,11 @@
 ## Changelog
 
+### 4.0.0
+* Prepare plugin for Matomo 4.
+* Linking accounts has been moved to the users security settings.
+
 ### 3.0.1
-* Hotfix saving plugin system settings with empty domain whitelist (#34)
+* Hotfix saving plugin system settings with empty domain whitelist (#34).
 
 ### 3.0.0
 * Align version number with Matomo major release version.
