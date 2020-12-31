@@ -140,6 +140,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->userinfoUrl = $this->createUserinfoUrlSetting();
         $this->endSessionUrl = $this->createEndSessionUrlSetting();
         $this->userinfoId = $this->createUserinfoIdSetting();
+        $this->emailId = $this->createEmailIdSetting();
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
@@ -286,6 +287,21 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("userinfoId", $default = "id", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingUserinfoId");
             $field->description = Piwik::translate("LoginOIDC_SettingUserinfoIdHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+            $field->validators[] = new NotEmpty();
+        });
+    }
+
+    /**
+     * Add email id setting.
+     *
+     * @return SystemSetting
+     */
+    private function createEmailIdSetting() : SystemSetting
+    {
+        return $this->makeSetting("emailId", $default = "email", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingEmailId");
+            $field->description = Piwik::translate("LoginOIDC_SettingEmailIdHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             $field->validators[] = new NotEmpty();
         });
