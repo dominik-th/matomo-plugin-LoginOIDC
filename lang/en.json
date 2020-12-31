@@ -22,6 +22,8 @@
         "SettingUserinfoIdHelp": "Name of the unique user id field in the userinfo response. Usually for OpenID Connect services like Auth0 this is 'sub'. Github provides the user id in 'id'.",
         "SettingClientId": "Client ID",
         "SettingClientIdHelp": "",
+        "SettingEmailId": "Email ID",
+        "SettingEmailIdHelp": "",
         "SettingClientSecret": "Client Secret",
         "SettingClientSecretHelp": "",
         "SettingScope": "OAuth Scopes",
