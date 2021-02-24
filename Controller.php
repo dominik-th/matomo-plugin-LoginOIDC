@@ -259,6 +259,22 @@ class Controller extends \Piwik\Plugin\Controller
 
         $user = $this->getUserByRemoteId("oidc", $providerUserId);
 
+
+	//auto linking
+	if ($settings->autoLinking->getValue() ) {
+	        $userModel = new Model();
+        	$matomoUser = $userModel->getUser($providerUserId);
+		if (! empty($matomoUser)) {
+			if (empty($user)) {
+				$this->linkAccount($providerUserId, $providerUserId);
+			}
+	
+        		$user = $this->getUserByRemoteId("oidc", $providerUserId);
+		}
+	}
+	//
+
+
         if (empty($user)) {
             if (Piwik::isUserIsAnonymous()) {
                 // user with the remote id is currently not in our database

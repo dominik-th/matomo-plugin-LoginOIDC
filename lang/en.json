@@ -30,6 +30,8 @@
         "SettingRedirectUriOverrideHelp": "In some cases it might be useful to manipulate the redirect uri which is given to the OpenID Connect provider. If you are unsure, just leave this field empty.",
         "SettingAllowedSignupDomains": "Restrict user creation to domains",
         "SettingAllowedSignupDomainsHelp": "List of email domains which should be allowed to create new accounts. Multiple domains have to be separated by line breaks. When empty, any email domain will be accepted.",
+	"SettingAutoLinking": "Enable auto linking",
+	"SettingAutoLinkingHelp": "Enables auto linking of accounts with has the same user id in Matomo and the OIDC provider",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "This allows you to sign in using an external authentication service.",
         "AccountLinked": "Your account is currently linked (Remote User ID: %1$s).",
