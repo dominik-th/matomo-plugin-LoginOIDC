@@ -4,7 +4,7 @@
 
 Login via third party authentication services.
 
-Easily add a "Login with Github" button your Matomo instance. You can also setup any other service to do the authentication for you.
+Easily add a "Login with GitHub" button your Matomo instance. You can also setup any other service to do the authentication for you.
 
 ## Installation
 
