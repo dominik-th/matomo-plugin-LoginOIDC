@@ -122,6 +122,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      * @var string
      */
     public $allowedSignupDomains;
+    
+    /**
+     * Activates auto login
+     *
+     * @var bool
+     */
+    public $autoLogin;
 
     /**
      * Initialize the plugin settings.
@@ -145,6 +152,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->scope = $this->createScopeSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
+        $this->autoLogin = $this->createAutoLoginSetting();
     }
 
     /**
@@ -371,6 +379,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
                     }
                 }
             };
+        });
+    }
+
+    /**
+     * Add auto login setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAutoLoginSetting() : SystemSetting
+    {
+        return $this->makeSetting("autoLogin", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAutoLogin");
+            $field->description = Piwik::translate("LoginOIDC_SettingAutoLoginHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }
 }

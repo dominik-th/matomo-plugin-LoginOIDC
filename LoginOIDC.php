@@ -34,7 +34,9 @@ class LoginOIDC extends \Piwik\Plugin
             "Template.userSecurity.afterPassword" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
             "Template.confirmPasswordContent" => "renderConfirmPasswordMod",
-            "Login.logout" => "logoutMod"
+            "Login.logout" => "logoutMod",
+            "Controller.Login." => "initiateAutoLogin",
+            "Controller.Login.login" => "initiateAutoLogin"
         );
     }
 
@@ -144,6 +146,29 @@ class LoginOIDC extends \Piwik\Plugin
             }
             Config::getInstance()->General['login_logout_url'] = $endSessionUrl->buildString();
         }
+    }
+    
+    /**
+     * Initiates autoLogin (in conjunction with direct login feature).
+     *
+     * @return void
+     */
+    public function initiateAutoLogin() : void
+    {
+        $settings = new SystemSettings();
+        $autoLoginEnabled = $settings->autoLogin->getValue();
+        $disableDirectLoginUrl = $settings->disableDirectLoginUrl->getValue();
+        
+        if (!$disableDirectLoginUrl && $autoLoginEnabled) {
+            $url="index.php?module=LoginOIDC&action=signin";
+	    	
+            if (!isset($_SESSION["loginoidc_triedautologin"])) {
+                $_SESSION["loginoidc_triedautologin"] = true;
+                \Piwik\Url::redirectToUrl($url);
+            } else {
+                unset($_SESSION["loginoidc_triedautologin"]);
+            }
+	}	
     }
 
     /**
