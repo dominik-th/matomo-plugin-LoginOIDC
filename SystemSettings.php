@@ -51,7 +51,6 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
      */
     public $autoLinking;
 
-
     /**
      * The name of the oauth provider, which is also shown on the login screen.
      *
@@ -151,7 +150,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->scope = $this->createScopeSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
-	$this->autoLinking = $this->createAutoLinkingSetting();
+        $this->autoLinking = $this->createAutoLinkingSetting();
     }
 
     /**
