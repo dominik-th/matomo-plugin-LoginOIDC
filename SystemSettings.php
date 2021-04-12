@@ -48,6 +48,8 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     /**
      * Enable auto linking of accounts
+     *
+     * @var bool
      */
     public $autoLinking;
 
