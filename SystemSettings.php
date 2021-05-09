@@ -47,6 +47,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $bypassTwoFa;
 
     /**
+     * Enable auto linking of accounts
+     *
+     * @var bool
+     */
+    public $autoLinking;
+
+    /**
      * The name of the oauth provider, which is also shown on the login screen.
      *
      * @var string
@@ -145,6 +152,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->scope = $this->createScopeSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
+        $this->autoLinking = $this->createAutoLinkingSetting();
     }
 
     /**
@@ -373,4 +381,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             };
         });
     }
+
+
+    /**
+     * Add autoLinking setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAutoLinkingSetting() : SystemSetting
+    {
+        return $this->makeSetting("autoLinking", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAutoLinking");
+            $field->description = Piwik::translate("LoginOIDC_SettingAutoLinkingHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
 }

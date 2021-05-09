@@ -259,6 +259,23 @@ class Controller extends \Piwik\Plugin\Controller
 
         $user = $this->getUserByRemoteId("oidc", $providerUserId);
 
+
+        //auto linking
+        //if setting is activated, the oidc account is automatically linked, if the user ID of the OpenID Connect Provider is equal to the internal matomo user ID
+        if ($settings->autoLinking->getValue() ) {
+                $userModel = new Model();
+                $matomoUser = $userModel->getUser($providerUserId);
+                if (! empty($matomoUser)) {
+                        if (empty($user)) {
+                                $this->linkAccount($providerUserId, $providerUserId);
+                        }
+        
+                        $user = $this->getUserByRemoteId("oidc", $providerUserId);
+                }
+        }
+        //
+
+
         if (empty($user)) {
             if (Piwik::isUserIsAnonymous()) {
                 // user with the remote id is currently not in our database
