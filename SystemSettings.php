@@ -143,6 +143,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->disableDirectLoginUrl = $this->createDisableDirectLoginUrlSetting();
         $this->allowSignup = $this->createAllowSignupSetting();
         $this->bypassTwoFa = $this->createBypassTwoFaSetting();
+        $this->autoLinking = $this->createAutoLinkingSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
@@ -154,7 +155,6 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->scope = $this->createScopeSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
-        $this->autoLinking = $this->createAutoLinkingSetting();
     }
 
     /**
@@ -209,6 +209,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("bypassTwoFa", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingBypassTwoFa");
             $field->description = Piwik::translate("LoginOIDC_SettingBypassTwoFaHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add autoLinking setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAutoLinkingSetting() : SystemSetting
+    {
+        return $this->makeSetting("autoLinking", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAutoLinking");
+            $field->description = Piwik::translate("LoginOIDC_SettingAutoLinkingHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }
@@ -383,19 +397,4 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             };
         });
     }
-
-    /**
-     * Add autoLinking setting.
-     *
-     * @return SystemSetting
-     */
-    private function createAutoLinkingSetting() : SystemSetting
-    {
-        return $this->makeSetting("autoLinking", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
-            $field->title = Piwik::translate("LoginOIDC_SettingAutoLinking");
-            $field->description = Piwik::translate("LoginOIDC_SettingAutoLinkingHelp");
-            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-        });
-    }
-
 }
