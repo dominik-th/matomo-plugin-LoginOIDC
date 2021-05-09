@@ -31,7 +31,7 @@
         "SettingAllowedSignupDomains": "Restrict user creation to domains",
         "SettingAllowedSignupDomainsHelp": "List of email domains which should be allowed to create new accounts. Multiple domains have to be separated by line breaks. When empty, any email domain will be accepted.",
         "SettingAutoLinking": "Enable auto linking",
-        "SettingAutoLinkingHelp": "Enables auto linking of accounts with has the same user id in Matomo and the OIDC provider",
+        "SettingAutoLinkingHelp": "Enables auto linking of accounts which have the same user id in Matomo and the OIDC provider",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "This allows you to sign in using an external authentication service.",
         "AccountLinked": "Your account is currently linked (Remote User ID: %1$s).",

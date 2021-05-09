@@ -43,6 +43,8 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     /**
      * Bypass 2nd factor when login with OIDC
+     *
+     * @var bool
      */
     public $bypassTwoFa;
 
@@ -381,7 +383,6 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             };
         });
     }
-
 
     /**
      * Add autoLinking setting.
