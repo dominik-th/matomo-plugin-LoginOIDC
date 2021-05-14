@@ -43,8 +43,17 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     /**
      * Bypass 2nd factor when login with OIDC
+     *
+     * @var bool
      */
     public $bypassTwoFa;
+
+    /**
+     * Enable auto linking of accounts
+     *
+     * @var bool
+     */
+    public $autoLinking;
 
     /**
      * The name of the oauth provider, which is also shown on the login screen.
@@ -141,6 +150,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->disableDirectLoginUrl = $this->createDisableDirectLoginUrlSetting();
         $this->allowSignup = $this->createAllowSignupSetting();
         $this->bypassTwoFa = $this->createBypassTwoFaSetting();
+        $this->autoLinking = $this->createAutoLinkingSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
@@ -207,6 +217,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("bypassTwoFa", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingBypassTwoFa");
             $field->description = Piwik::translate("LoginOIDC_SettingBypassTwoFaHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add autoLinking setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAutoLinkingSetting() : SystemSetting
+    {
+        return $this->makeSetting("autoLinking", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAutoLinking");
+            $field->description = Piwik::translate("LoginOIDC_SettingAutoLinkingHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }

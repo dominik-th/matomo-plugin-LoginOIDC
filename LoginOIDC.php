@@ -13,6 +13,7 @@ use Exception;
 use Piwik\Common;
 use Piwik\Config;
 use Piwik\Db;
+use Piwik\DbHelper;
 use Piwik\FrontController;
 use Piwik\Plugins\LoginOIDC\SystemSettings;
 use Piwik\Plugins\LoginOIDC\Url;
@@ -76,6 +77,16 @@ class LoginOIDC extends \Piwik\Plugin
     public function getStylesheetFiles(array &$files)
     {
         $files[] = "plugins/LoginOIDC/stylesheets/loginMod.css";
+    }
+
+    /**
+     * Register the new tables, so Matomo knows about them.
+     *
+     * @param array $allTablesInstalled
+     */
+    public function getTablesInstalled(&$allTablesInstalled)
+    {
+        $allTablesInstalled[] = Common::prefixTable('loginoidc_provider');
     }
 
     /**
@@ -178,24 +189,15 @@ class LoginOIDC extends \Piwik\Plugin
      */
     public function install()
     {
-        try {
-            // right now there is just one provider but we already add a column to support multiple providers later on
-            $sql = "CREATE TABLE " . Common::prefixTable("loginoidc_provider") . " (
-                user VARCHAR( 100 ) NOT NULL,
-                provider_user VARCHAR( 255 ) NOT NULL,
-                provider VARCHAR( 255 ) NOT NULL,
-                date_connected TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-                PRIMARY KEY ( provider_user, provider ),
-                UNIQUE KEY user_provider ( user, provider ),
-                FOREIGN KEY ( user ) REFERENCES " . Common::prefixTable("user") . " ( login ) ON DELETE CASCADE
-                ) ENGINE=InnoDB";
-            Db::exec($sql);
-        } catch(Exception $e) {
-            // ignore error if table already exists (1050 code is for 'table already exists')
-            if (!Db::get()->isErrNo($e, "1050")) {
-                throw $e;
-            }
-        }
+        // right now there is just one provider but we already add a column to support multiple providers later on
+        DbHelper::createTable("loginoidc_provider", "
+            `user` VARCHAR( 100 ) NOT NULL,
+            `provider_user` VARCHAR( 255 ) NOT NULL,
+            `provider` VARCHAR( 255 ) NOT NULL,
+            `date_connected` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+            PRIMARY KEY ( `provider_user`, `provider` ),
+            UNIQUE KEY `user_provider` ( `user`, `provider` ),
+            FOREIGN KEY ( `user` ) REFERENCES " . Common::prefixTable("user") . " ( `login` ) ON DELETE CASCADE");
     }
 
     /**

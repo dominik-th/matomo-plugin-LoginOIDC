@@ -6,8 +6,8 @@
 
 **Which providers can I use?**
 
-I tested the plugin with Auth0, Github and Keycloak, which work fine.
-If your provider does not seem to work, leave an issue on Github.
+I tested the plugin with Auth0, GitHub and Keycloak, which work fine.
+If your provider does not seem to work, leave an issue on GitHub.
 
 **How can I unlink all users?**
 
@@ -34,7 +34,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
 
 **What are the settings for ...?**
 
-- Github:
+- GitHub:
 
   - Authorize URL: `https://github.com/login/oauth/authorize`
   - Token URL: `https://github.com/login/oauth/access_token`
