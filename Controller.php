@@ -236,6 +236,7 @@ class Controller extends \Piwik\Plugin\Controller
 
         $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
         $_SESSION['loginoidc_auth'] = true;
+        $_SESSION['loginoidc_refresh_token'] = empty($result->refresh_token) ? null : $result->refresh_token;
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(

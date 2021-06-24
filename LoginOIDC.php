@@ -153,7 +153,25 @@ class LoginOIDC extends \Piwik\Plugin
             if ($originalLogoutUrl) {
                 $endSessionUrl->setQueryParameter("post_logout_redirect_uri", $originalLogoutUrl);
             }
-            Config::getInstance()->General['login_logout_url'] = $endSessionUrl->buildString();
+
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL,$endSessionUrl->buildString());
+            curl_setopt($ch, CURLOPT_USERPWD, $settings->clientId->getValue() . ":" . $settings->clientSecret->getValue());
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['content-type: application/x-www-form-urlencoded']);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['refresh_token' => $_SESSION['loginoidc_refresh_token']]));
+            $server_output = curl_exec($ch);
+
+
+            if ($server_output === "" && curl_getinfo($ch, CURLINFO_RESPONSE_CODE) === 204) {
+                Config::getInstance()->General['login_logout_url'] = $endSessionUrl->getQueryParameter('redirect_uri');
+            } else {
+                echo $server_output . PHP_EOL;
+                exit;
+            }
+            curl_close($ch);
         }
     }
 
