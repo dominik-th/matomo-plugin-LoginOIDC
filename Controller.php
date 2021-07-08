@@ -274,6 +274,10 @@ class Controller extends \Piwik\Plugin\Controller
 
         if (empty($user)) {
             if (Piwik::isUserIsAnonymous()) {
+                // Handle if user attributes are a property of $result.
+                if(!isset($result->email) && (isset($result->attributes->email) || isset($result->attributes->mail))) {
+                    $result = $result->attributes;
+                }
                 // user with the remote id is currently not in our database
                 $this->signupUser($settings, $providerUserId, $result->email);
             } else {
