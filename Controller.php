@@ -274,6 +274,9 @@ class Controller extends \Piwik\Plugin\Controller
 
         if (empty($user)) {
             if (Piwik::isUserIsAnonymous()) {
+                if(!isset($result->email) && isset($result->mail)) {
+                    $result->email = $result->mail;
+                }
                 // user with the remote id is currently not in our database
                 $this->signupUser($settings, $providerUserId, $result->email);
             } else {
