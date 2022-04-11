@@ -146,8 +146,8 @@ class LoginOIDC extends \Piwik\Plugin
         $endSessionUrl = $settings->endSessionUrl->getValue();
         if (!empty($endSessionUrl) && $_SESSION["loginoidc_auth"]) {
             $endSessionUrl = new Url($endSessionUrl);
-            if (isset($_SESSION[loginoidc_idtoken])) {
-                $endSessionUrl->setQueryParameter("id_token_hint", $_SESSION[loginoidc_idtoken]);
+            if (isset($_SESSION["loginoidc_idtoken"])) {
+                $endSessionUrl->setQueryParameter("id_token_hint", $_SESSION["loginoidc_idtoken"]);
             }
             $originalLogoutUrl = Config::getInstance()->General['login_logout_url'];
             if ($originalLogoutUrl) {
