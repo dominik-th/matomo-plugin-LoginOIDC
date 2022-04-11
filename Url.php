@@ -78,6 +78,7 @@ class Url
 
         $this->scheme = $urlParts["scheme"];
         $this->host = $urlParts["host"];
+        $this->port = $urlParts["port"];
         $this->path = $urlParts["path"];
 
         if (isset($urlParts["query"])) { 
