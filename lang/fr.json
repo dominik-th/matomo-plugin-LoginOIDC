@@ -30,6 +30,8 @@
         "SettingRedirectUriOverrideHelp": "Dans certains cas, il peut être pratique de redéfinir l'URI de redirection qui est transmise au fournisseur OpenID Connect. Si vous êtes n'êtes pas sûr, laissez ce champ vide.",
         "SettingAllowedSignupDomains": "Limiter la création d'utilisateurs aux domaines",
         "SettingAllowedSignupDomainsHelp": "",
+        "SettingAllowedRole": "Limiter la connexion de l'utilisateur avec un rôle spécifique",
+        "SettingAllowedRoleHelp": "ex. matomo-user",
         "OpenIDConnect": "OpenID Connect",
         "OIDCIntro": "Ceci vous permet de vous connecter à Matomo en utilisant un service d'authentification externe.",
         "AccountLinked": "Votre compte est actuellement lié (Identifiant du compte utilisateur distant : %1$s).",

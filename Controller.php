@@ -229,11 +229,14 @@ class Controller extends \Piwik\Plugin\Controller
         $response = curl_exec($curl);
         curl_close($curl);
         $result = json_decode($response);
-
         if (empty($result) || empty($result->access_token)) {
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));
         }
-
+        $access_token=json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $result->access_token)[1]))));
+        $has_correct_role = in_array($settings->allowedRole->getValue(), $access_token->roles);
+        if (!empty($settings->allowedRole->getValue()) && !$has_correct_role) {
+            throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));
+        }
         $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
         $_SESSION['loginoidc_auth'] = true;
 
