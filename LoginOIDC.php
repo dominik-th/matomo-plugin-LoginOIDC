@@ -35,7 +35,8 @@ class LoginOIDC extends \Piwik\Plugin
             "Template.userSecurity.afterPassword" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
             "Template.confirmPasswordContent" => "renderConfirmPasswordMod",
-            "Login.logout" => "logoutMod"
+            "Login.logout" => "logoutMod",
+            "Login.userRequiresPasswordConfirmation" => "userRequiresPasswordConfirmation"
         );
     }
 
@@ -120,6 +121,8 @@ class LoginOIDC extends \Piwik\Plugin
 
     /**
      * Append login oauth button layout.
+     * The password confirmation modal is not consistent enough to rely on this modification.
+     * It is recommended to use the `userRequiresPasswordConfirmation` event instead
      *
      * @param  string       $out
      * @param  string|null  $payload
@@ -145,6 +148,8 @@ class LoginOIDC extends \Piwik\Plugin
         $settings = new SystemSettings();
         $endSessionUrl = $settings->endSessionUrl->getValue();
         if (!empty($endSessionUrl) && $_SESSION["loginoidc_auth"]) {
+            // make sure we properly unset the plugins session variable
+            unset($_SESSION['loginoidc_auth']);
             $endSessionUrl = new Url($endSessionUrl);
             if (isset($_SESSION["loginoidc_idtoken"])) {
                 $endSessionUrl->setQueryParameter("id_token_hint", $_SESSION["loginoidc_idtoken"]);
@@ -154,6 +159,22 @@ class LoginOIDC extends \Piwik\Plugin
                 $endSessionUrl->setQueryParameter("post_logout_redirect_uri", $originalLogoutUrl);
             }
             Config::getInstance()->General['login_logout_url'] = $endSessionUrl->buildString();
+        }
+    }
+
+    /**
+     * Disable password confirmation when user signed up with LoginOIDC.
+     * This feature requires Matomo >4.12.0
+     *
+     * @return void
+     */
+    public function userRequiresPasswordConfirmation(&$requiresPasswordConfirmation, $login) : void
+    {
+        $settings = new SystemSettings();
+        $disablePasswordConfirmation = $settings->disablePasswordConfirmation->getValue();
+        if ($disablePasswordConfirmation) {
+            // require password confirmation when user has not signed in with the plugin
+            $requiresPasswordConfirmation = !$_SESSION["loginoidc_auth"];
         }
     }
 

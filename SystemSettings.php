@@ -28,6 +28,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $disableSuperuser;
 
     /**
+     * The disable password confirmation setting.
+     *
+     * @var bool
+     */
+    public $disablePasswordConfirmation;
+
+    /**
      * Whether the login procedure has to be initiated from the Matomo login page
      *
      * @var bool
@@ -140,6 +147,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     protected function init()
     {
         $this->disableSuperuser = $this->createDisableSuperuserSetting();
+        $this->disablePasswordConfirmation = $this->createDisablePasswordConfirmationSetting();
         $this->disableDirectLoginUrl = $this->createDisableDirectLoginUrlSetting();
         $this->allowSignup = $this->createAllowSignupSetting();
         $this->bypassTwoFa = $this->createBypassTwoFaSetting();
@@ -167,6 +175,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->makeSetting("disableSuperuser", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
             $field->title = Piwik::translate("LoginOIDC_SettingDisableSuperuser");
             $field->description = Piwik::translate("LoginOIDC_SettingDisableSuperuserHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
+    /**
+     * Add disable password confirmation setting.
+     *
+     * @return SystemSetting
+     */
+    private function createDisablePasswordConfirmationSetting() : SystemSetting
+    {
+        return $this->makeSetting("disablePasswordConfirmation", $default = false, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingDisablePasswordConfirmation");
+            $field->description = Piwik::translate("LoginOIDC_SettingDisablePasswordConfirmationHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }

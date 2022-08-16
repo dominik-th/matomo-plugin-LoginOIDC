@@ -2,6 +2,8 @@
     "LoginOIDC": {
         "SettingDisableSuperuser": "Disable external login for superusers",
         "SettingDisableSuperuserHelp": "",
+        "SettingDisablePasswordConfirmation": "Disable password confirmation",
+        "SettingDisablePasswordConfirmationHelp": "Certain administrational tasks require a password confirmation. When administrators are using this plugin and do not have a password they could confirm, this option can be used to skip the dialogue, when signed in via LoginOIDC",
         "SettingDisableDirectLoginUrl": "Disable direct login url",
         "SettingDisableDirectLoginUrlHelp": "When checked, users have to inititate the login via the Matomo login page. Otherwise the login button can be embedded in third-party services.",
         "SettingAllowSignup": "Create new users when users try to log in with unknown OIDC accounts",
