@@ -1,6 +1,6 @@
 {
     "name": "LoginOIDC",
-    "version": "4.1.1",
+    "version": "4.1.2",
     "description": "Adds support for integrating external authentication services",
     "keywords": ["authentication", "login", "oauth", "openid", "connect", "sso"],
     "license": "GPL v3+",
