@@ -1,5 +1,11 @@
 ## Changelog
 
+### 4.1.0
+* Add option to skip password confirmation requests when user has signed in via LoginOIDC (requires Matomo >4.12.0) (#72).
+* Add option to automatically link existing users when IdP user id matches Matomos user id (#44).
+* Fix logout redirect (#64).
+* Improve db table creation (#31).
+
 ### 4.0.0
 * Prepare plugin for Matomo 4.
 * Linking accounts has been moved to the users security settings.
@@ -18,22 +24,17 @@
 * Add option to bypass second factor when sign in with OIDC.
 
 ### 0.1.4
-
 * Add option to automatically create unknown users.
 
 ### 0.1.3
-
 * Add an option to override the redirect URI.
 
 ### 0.1.2
-
 * Fix oauth flow for [Keycloak](https://github.com/keycloak/keycloak).
 * Improve FAQ.
 
 ### 0.1.1
-
 * Lowered the required Matomo version for this plugin.
 
 ### 0.1.0
-
 * Initial version.
