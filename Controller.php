@@ -284,7 +284,7 @@ class Controller extends \Piwik\Plugin\Controller
         } else {
             // users identity has been successfully confirmed by the remote oidc server
             if (Piwik::isUserIsAnonymous()) {
-                if ($settings->disableSuperuser->getValue() && Piwik::hasTheUserSuperUserAccess($user["login"])) {
+                if ($settings->disableSuperuser->getValue() && $this->hasTheUserSuperUserAccess($user["login"])) {
                     throw new Exception(Piwik::translate("LoginOIDC_ExceptionSuperUserOauthDisabled"));
                 } else {
                     $this->signinAndRedirect($user, $settings);
@@ -298,6 +298,30 @@ class Controller extends \Piwik\Plugin\Controller
                 }
             }
         }
+    }
+
+    /**
+     * Check whether the given user has superuser access.
+     * The function in Piwik\Core cannot be used because it requires an admin user being signed in.
+     * It was used as a template for this function.
+     * See: {@link \Piwik\Core::hasTheUserSuperUserAccess($theUser)} method.
+     * See: {@link \Piwik\Plugins\UsersManager\Model::getUsersHavingSuperUserAccess()} method.
+     * 
+     * @param  string  $theUser A username to be checked for superuser access
+     * @return bool
+     */
+    private function hasTheUserSuperUserAccess(string $theUser)
+    {
+        $userModel = new Model();
+        $superUsers = $userModel->getUsersHavingSuperUserAccess();
+
+        foreach ($superUsers as $superUser) {
+            if ($theUser === $superUser['login']) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

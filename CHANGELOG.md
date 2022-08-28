@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.1.2
+* Fix disabling OIDC for superusers not having any effect (#68).
+
 ### 4.1.1
 * Hotfix warning about session variable not being set when signing in with username/password.
 
