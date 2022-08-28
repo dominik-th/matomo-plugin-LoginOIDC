@@ -174,7 +174,7 @@ class LoginOIDC extends \Piwik\Plugin
         $disablePasswordConfirmation = $settings->disablePasswordConfirmation->getValue();
         if ($disablePasswordConfirmation) {
             // require password confirmation when user has not signed in with the plugin
-            $requiresPasswordConfirmation = !$_SESSION["loginoidc_auth"];
+            $requiresPasswordConfirmation = !($_SESSION["loginoidc_auth"] ?? false);
         }
     }
 
