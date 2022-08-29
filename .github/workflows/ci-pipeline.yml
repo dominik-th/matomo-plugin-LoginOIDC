@@ -1,0 +1,82 @@
+name: Tests
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php: ['7.4', '8.1']
+        matomo: ['4.0.0', '4.11.0']
+        exclude:
+          - php: 8.1
+            matomo: 4.0.0
+    runs-on: ${{ matrix.operating-system }}
+    services:
+      db:
+        image: mariadb:10.9.2
+        ports:
+          - 3306:3306
+        env:
+          MARIADB_USER: matomo
+          MARIADB_PASSWORD: matomo
+          MARIADB_DATABASE: matomo
+          MARIADB_ROOT_PASSWORD: root
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.workspace }}/loginoidc
+      - name: Checkout matomo
+        uses: actions/checkout@v3
+        with:
+          repository: 'matomo-org/matomo'
+          ref: ${{ matrix.matomo }}
+          submodules: 'recursive'
+          path: ${{ github.workspace }}/matomo
+      - name: Install php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, gd, xml, mbstring, mysql
+      - name: Prepare and launch matomo
+        run: |
+          cd ${{ github.workspace }}/matomo
+          composer install
+          ln -s ${{ github.workspace }}/loginoidc ./plugins/LoginOIDC
+          php -S localhost:8080 &
+      - name: Initialize matomo
+        run: |
+          curl -s -o nul -v -X POST "localhost:8080/index.php?action=databaseSetup" \
+               -H "Content-Type: application/x-www-form-urlencoded" \
+               -d "host=127.0.0.1&username=matomo&password=matomo&dbname=matomo&tables_prefix=&adapter=PDO\MYSQL"
+          curl -s -o nul -v "localhost:8080/index.php?action=tablesCreation&module=Installation"
+          curl -s -o nul -v -X POST "localhost:8080/index.php?action=setupSuperUser&module=Installation" \
+               -H "Content-Type: application/x-www-form-urlencoded" \
+               -d "login=admin&password=123456&password_bis=123456&email=admin@example.com&subscribe_newsletter_piwikorg=0&subscribe_newsletter_professionalservices=0"
+          curl -s -o nul -v -X POST "localhost:8080/index.php?action=firstWebsiteSetup&module=Installation" \
+               -H "Content-Type: application/x-www-form-urlencoded" \
+               -d "siteName=ci&url=example.com&timezone=Europe/London&ecommerce=0"
+          curl -s -o nul -v "localhost:8080/index.php?action=trackingCode&module=Installation&site_idSite=1&site_name=ci"
+          curl -s -o nul -v -X POST "localhost:8080/index.php?action=finished&module=Installation" \
+               -H "Content-Type: application/x-www-form-urlencoded" \
+               -d "do_not_track=1&anonymise_ip=1&submit=Continue"
+
+          ${{ github.workspace }}/matomo/console config:set --section="General" --key="enable_trusted_host_check" --value="0"
+          ${{ github.workspace }}/matomo/console config:set --section="tests" --key="request_uri" --value="/"
+          ${{ github.workspace }}/matomo/console config:set --section="tests" --key="port" --value="8080"
+          ${{ github.workspace }}/matomo/console plugin:activate LoginOIDC TestRunner
+          ${{ github.workspace }}/matomo/console development:enable
+      - name: Run unit tests
+        run: |
+          ${{ github.workspace }}/matomo/console tests:run LoginOIDC unit
+      - name: Run system tests
+        run: |
+          ${{ github.workspace }}/matomo/console tests:run LoginOIDC system
+      - name: Run integration tests
+        run: |
+          ${{ github.workspace }}/matomo/console tests:run LoginOIDC integration
