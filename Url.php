@@ -76,10 +76,10 @@ class Url
     {
         $urlParts = parse_url($url);
 
-        $this->scheme = $urlParts["scheme"];
-        $this->host = $urlParts["host"];
-        $this->port = $urlParts["port"];
-        $this->path = $urlParts["path"];
+        $this->scheme = $urlParts["scheme"] ?? null;
+        $this->host = $urlParts["host"] ?? null;
+        $this->port = $urlParts["port"] ?? null;
+        $this->path = $urlParts["path"] ?? null;
 
         if (isset($urlParts["query"])) { 
             parse_str($urlParts["query"], $this->query);
@@ -88,7 +88,7 @@ class Url
 
     /**
      * Build a full url string based on the parts.
-     * 
+     *
      * @return string
      */
     public function buildString() : string
@@ -126,7 +126,7 @@ class Url
      *
      * @return void
      */
-    public function setQueryParameter(string $parameter, string $value)
+    public function setQueryParameter(string $parameter, string $value) : void
     {
         $this->query[$parameter] = $value;
     }
