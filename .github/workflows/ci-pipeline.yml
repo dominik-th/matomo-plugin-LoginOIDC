@@ -39,7 +39,7 @@ jobs:
           submodules: 'recursive'
           path: ${{ github.workspace }}/matomo
       - name: Install php
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, gd, xml, mbstring, mysql
