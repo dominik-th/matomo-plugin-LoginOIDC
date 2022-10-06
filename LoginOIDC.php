@@ -35,8 +35,25 @@ class LoginOIDC extends \Piwik\Plugin
             "Template.userSecurity.afterPassword" => "renderLoginOIDCUserSettings",
             "Template.loginNav" => "renderLoginOIDCMod",
             "Template.confirmPasswordContent" => "renderConfirmPasswordMod",
+            "Login.userRequiresPasswordConfirmation" => "confirmPassword",
             "Login.logout" => "logoutMod"
         );
+    }
+
+    /**
+     * called to check if a password confirmation for a user is required.
+     *
+     * This event can be used to skip the password confirmation checks for certain users,
+     * where e.g. no password would be available.
+     *
+     * Attention: Use this event wisely. Disabling password confirmation decreases the security.
+     *
+     * @param bool $requiresPasswordConfirmation Indicates if the password should be checked or not
+     * @param string $login Login of a user the password should be confirmed for
+     */
+    public function confirmPassword(bool &$requiresPasswordConfirmation, $login): void
+    {
+        $requiresPasswordConfirmation = false;
     }
 
     /**
