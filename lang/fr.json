@@ -4,6 +4,7 @@
         "SettingDisableSuperuserHelp": "",
         "SettingDisableDirectLoginUrl": "Désactiver l'url de connexion directe",
         "SettingDisableDirectLoginUrlHelp": "",
+        "SettingHidePasswordLogin": "Lorsque cette option est cochée, elle masque l'invite de connexion standard pour le nom d'utilisateur et le mot de passe.",
         "SettingAllowSignup": "Créer une nouveau compte utilisateur quand les utilisateurs tentent de se connecter avec un compte OIDC inconnu",
         "SettingAllowSignupHelp": "",
         "SettingBypassTwoFa": "Désactiver le 2è facteur lors d'une connexion avec OIDC",
