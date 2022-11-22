@@ -22,6 +22,8 @@
         "SettingEndSessionUrlHelp": "After logging out, the user is redirected to this URL to end the session at the provider. If you are unsure, just leave this field empty.",
         "SettingUserinfoId": "Userinfo ID",
         "SettingUserinfoIdHelp": "Name of the unique user id field in the userinfo response. Usually for OpenID Connect services like Auth0 this is 'sub'. Github provides the user id in 'id'.",
+        "SettingEmailKey": "Email key",
+        "SettingEmailKeyHelp": "Key of the User info object containing the user's email.",
         "SettingClientId": "Client ID",
         "SettingClientIdHelp": "",
         "SettingClientSecret": "Client Secret",

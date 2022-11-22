@@ -158,6 +158,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->userinfoUrl = $this->createUserinfoUrlSetting();
         $this->endSessionUrl = $this->createEndSessionUrlSetting();
         $this->userinfoId = $this->createUserinfoIdSetting();
+        $this->emailKey = $this->createEmailKeySetting();
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
@@ -334,6 +335,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->description = Piwik::translate("LoginOIDC_SettingUserinfoIdHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             $field->validators[] = new NotEmpty();
+        });
+    }
+
+    /**
+     * Add email key setting.
+     *
+     * @return SystemSetting
+     */
+    private function createEmailKeySetting() : SystemSetting
+    {
+        return $this->makeSetting("emailKey", $default = "email", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingEmailKey");
+            $field->description = Piwik::translate("LoginOIDC_SettingEmailKeyHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
         });
     }
 

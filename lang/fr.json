@@ -20,6 +20,8 @@
         "SettingEndSessionUrlHelp": "",
         "SettingUserinfoId": "ID Userinfo",
         "SettingUserinfoIdHelp": "Nom du champ de l'identifiant unique utilisateur dans la réponse 'userinfo'. Habituellement, pour les services de connexion OpenID Connect comme Auth0, il s'agit de 'sub'. Github fourni l'identifiant utilisateur avec 'id'.",
+        "SettingEmailKey": "Clé de l'email",
+        "SettingEmailKeyHelp": "Clé de l'objet utilisateur indiquant l'email.",
         "SettingClientId": "Client ID",
         "SettingClientIdHelp": "",
         "SettingClientSecret": "Client Secret",
