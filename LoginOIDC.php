@@ -36,8 +36,32 @@ class LoginOIDC extends \Piwik\Plugin
             "Template.loginNav" => "renderLoginOIDCMod",
             "Template.confirmPasswordContent" => "renderConfirmPasswordMod",
             "Login.logout" => "logoutMod",
-            "Login.userRequiresPasswordConfirmation" => "userRequiresPasswordConfirmation"
+            "Login.userRequiresPasswordConfirmation" => "userRequiresPasswordConfirmation",
+            "Request.dispatch" => array(
+                "before" => true,
+                "function" => "checkLogin",
+            ),
         );
+    }
+
+    /**
+     * Redirects default login action to LoginOIDC UI instead of bouncing it around Login -> LoginOIDC -> Login -> ...
+     * 
+     * @param string $pluginName
+     * @param string $methodName
+     * @param array &$parameters
+     * 
+     * @return void
+     */
+    public function checkLogin($pluginName, $methodName, &$parameters): void
+    {
+        if ($pluginName == "Login" && $methodName == "login") {
+            $baseUrl = \Piwik\Url::getCurrentUrlWithoutFileName();
+            $loginUrl = $baseUrl . 'index.php';
+            \Piwik\Url::redirectToUrl($loginUrl);
+            exit();
+        }
+        return;
     }
 
     /**
