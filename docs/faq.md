@@ -82,3 +82,18 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Userinfo URL: `https://graph.microsoft.com/oidc/userinfo`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
+
+- Authentik
+  - Authorize URL: `https://<YOUR_AUTHENTIK_URL>/application/o/authorize/`
+  - Token URL: `https://<YOUR_AUTHENTIK_URL>/application/o/token/`
+  - Userinfo URL: `https://<YOUR_AUTHENTIK_URL>/application/o/userinfo/`
+  - Logout URL: `https://<YOUR_AUTHENTIK_URL>/application/o/matomo/end-session/`
+  - Userinfo ID: `sub`
+  - Client ID + Secret from Authentik Provider
+  - OAuth Scopes: `openid email`
+  
+  In the Authentik Provider:
+  - Redirect URIs: `.*` (only that worked for me, don't forget the DOT before!)
+  Remaining inputs for provider and application as normal.
+  
+  
