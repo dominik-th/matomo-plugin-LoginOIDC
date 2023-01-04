@@ -87,7 +87,7 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Authorize URL: `https://<YOUR_AUTHENTIK_URL>/application/o/authorize/`
   - Token URL: `https://<YOUR_AUTHENTIK_URL>/application/o/token/`
   - Userinfo URL: `https://<YOUR_AUTHENTIK_URL>/application/o/userinfo/`
-  - Logout URL: `https://<YOUR_AUTHENTIK_URL>/application/o/matomo/end-session/`
+  - Logout URL: `https://<YOUR_AUTHENTIK_URL>/application/o/<YOUR_AUTHENTIK_APPLICATION_SLUG>/end-session/`
   - Userinfo ID: `sub`
   - Client ID + Secret from Authentik Provider
   - OAuth Scopes: `openid email`
