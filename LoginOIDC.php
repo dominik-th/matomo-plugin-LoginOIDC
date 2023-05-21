@@ -17,6 +17,7 @@ use Piwik\DbHelper;
 use Piwik\FrontController;
 use Piwik\Plugins\LoginOIDC\SystemSettings;
 use Piwik\Plugins\LoginOIDC\Url;
+use Piwik\Request;
 use Piwik\Session;
 
 class LoginOIDC extends \Piwik\Plugin
@@ -62,8 +63,8 @@ class LoginOIDC extends \Piwik\Plugin
      */
     private function shouldHandleRememberMe() : bool
     {
-        $module = Common::getRequestVar("module", false);
-        $action = Common::getRequestVar("action", false);
+        $module = Request::fromGet()->getStringParameter("module", "");
+        $action = Request::fromGet()->getStringParameter("action", "");
         return ($module == "LoginOIDC") && ($action == "callback");
     }
 

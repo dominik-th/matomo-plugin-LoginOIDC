@@ -20,6 +20,7 @@ use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\UsersManager\API as UsersManagerAPI;
 use Piwik\Plugins\UsersManager\Model;
+use Piwik\Request;
 use Piwik\Session\SessionFingerprint;
 use Piwik\Session\SessionInitializer;
 use Piwik\Url;
@@ -193,13 +194,13 @@ class Controller extends \Piwik\Plugin\Controller
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionNotConfigured"));
         }
 
-        if ($_SESSION["loginoidc_state"] !== Common::getRequestVar("state")) {
+        if ($_SESSION["loginoidc_state"] !== Request::fromGet()->getStringParameter("state")) {
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionStateMismatch"));
         } else {
             unset($_SESSION["loginoidc_state"]);
         }
 
-        if (Common::getRequestVar("provider") !== "oidc") {
+        if (Request::fromGet()->getStringParameter("provider") !== "oidc") {
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionUnknownProvider"));
         }
 
@@ -207,10 +208,10 @@ class Controller extends \Piwik\Plugin\Controller
         $data = array(
             "client_id" => $settings->clientId->getValue(),
             "client_secret" => $settings->clientSecret->getValue(),
-            "code" => Common::getRequestVar("code"),
+            "code" => Request::fromGet()->getStringParameter("code"),
             "redirect_uri" => $this->getRedirectUri(),
             "grant_type" => "authorization_code",
-            "state" => Common::getRequestVar("state")
+            "state" => Request::fromGet()->getStringParameter("state")
         );
         $dataString = http_build_query($data);
 
