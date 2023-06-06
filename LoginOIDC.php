@@ -75,7 +75,12 @@ class LoginOIDC extends \Piwik\Plugin
      */
     public function getStylesheetFiles(array &$files)
     {
+        $settings = new SystemSettings();
+        $hidePasswordLogin = $settings->hidePasswordLogin->getValue();
         $files[] = "plugins/LoginOIDC/stylesheets/loginMod.css";
+        if ($hidePasswordLogin) {
+            $files[] = "plugins/LoginOIDC/stylesheets/loginModHidePwLogin.css";
+        }
     }
 
     /**
