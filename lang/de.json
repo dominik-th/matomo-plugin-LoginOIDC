@@ -30,6 +30,8 @@
         "SettingRedirectUriOverrideHelp": "In manchen Fällen ist es nützlich, die Redirect URI, die an den OpenID Connect Provider übergeben wird, zu überschreiben. Bei Unklarheit sollte dieses Feld freigelassen werden.",
         "SettingAllowedSignupDomains": "Erlaubte Domains für Accounterstellung",
         "SettingAllowedSignupDomainsHelp": "Wenn das Feld freigelassen wird, können sich Benutzer mit beliebiger E-Mail Adresse registrieren. Mehrere Domains können in separaten Zeilen angegeben werden.",
+        "SettingAllowedRole": "Restrict user login with specific role",
+        "SettingAllowedRoleHelp": "z.B. matomo-user",
         "SettingAutoLinking": "Aktiviere Auto Linking",
         "SettingAutoLinkingHelp": "Aktiviert Auto Linking von Accounts, die die selbe User ID in Matomo und dem OpenID Connect Provider haben.",
         "OpenIDConnect": "OpenID Connect",

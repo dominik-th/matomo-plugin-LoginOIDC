@@ -126,6 +126,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $scope;
 
     /**
+     * The allowedRole.
+     *
+     * @var string
+     */
+    public $allowedRole;
+
+    /**
      * The optional redirect uri override.
      *
      * @var string
@@ -161,6 +168,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
+        $this->allowedRole = $this->createAllowedRoleSetting();
         $this->redirectUriOverride = $this->createRedirectUriOverrideSetting();
         $this->allowedSignupDomains = $this->createAllowedSignupDomainsSetting();
     }
@@ -390,6 +398,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->title = Piwik::translate("LoginOIDC_SettingRedirectUriOverride");
             $field->description = Piwik::translate("LoginOIDC_SettingRedirectUriOverrideHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_URL;
+        });
+    }
+
+    /**
+     * Add allowed signup domains setting.
+     *
+     * @return SystemSetting
+     */
+    private function createAllowedRoleSetting() : SystemSetting
+    {
+        return $this->makeSetting("allowedRole", $default = "", FieldConfig::TYPE_STRING, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingAllowedRole");
+            $field->description = Piwik::translate("LoginOIDC_SettingAllowedRoleHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
         });
     }
 
