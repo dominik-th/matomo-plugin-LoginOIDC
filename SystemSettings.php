@@ -105,6 +105,13 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $userinfoId;
 
     /**
+     * Use the e-mail address as username.
+     * 
+     * @var bool
+     */
+    public $useEmailAsUsername;
+
+    /**
      * The client id given by the provider.
      *
      * @var string
@@ -158,6 +165,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->userinfoUrl = $this->createUserinfoUrlSetting();
         $this->endSessionUrl = $this->createEndSessionUrlSetting();
         $this->userinfoId = $this->createUserinfoIdSetting();
+        $this->useEmailAsUsername = $this->createUseEmailAsUsernameSetting();
         $this->clientId = $this->createClientIdSetting();
         $this->clientSecret = $this->createClientSecretSetting();
         $this->scope = $this->createScopeSetting();
@@ -334,6 +342,20 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->description = Piwik::translate("LoginOIDC_SettingUserinfoIdHelp");
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             $field->validators[] = new NotEmpty();
+        });
+    }
+
+    /**
+     * Add useEmailAsUsername setting.
+     *
+     * @return SystemSetting
+     */
+    private function createUseEmailAsUsernameSetting() : SystemSetting
+    {
+        return $this->makeSetting("useEmailAsUsername", $default = true, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingUseEmailAsUsername");
+            $field->description = Piwik::translate("LoginOIDC_SettingUseEmailAsUsernameHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }
 
