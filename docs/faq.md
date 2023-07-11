@@ -95,5 +95,12 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   In the Authentik Provider:
   - Redirect URIs: `.*` (only that worked for me, don't forget the DOT before!)
   Remaining inputs for provider and application as normal.
+
+- Authelia
+  - Authorize URL: `https://<YOUR_AUTHENTIK_URL>/api/oidc/authorization`
+  - Token URL: `https://<YOUR_AUTHENTIK_URL>/api/oidc/token`
+  - Userinfo URL: `https://<YOUR_AUTHENTIK_URL>/api/oidc/userinfo`
+  - Userinfo ID: `sub`
+  - OAuth Scopes: `openid profile email groups`
   
   
