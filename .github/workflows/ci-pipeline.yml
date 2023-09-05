@@ -25,11 +25,11 @@ jobs:
           MARIADB_ROOT_PASSWORD: root
     steps:
       - name: Checkout plugin
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: ${{ github.workspace }}/loginoidc
       - name: Checkout matomo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'matomo-org/matomo'
           ref: ${{ matrix.matomo }}
