@@ -105,6 +105,12 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $userinfoId;
 
     /**
+     * The name of the field used to retrieve the user's email
+     * 
+     * @var string
+     */
+    public $emailKey;
+    /**
      * The client id given by the provider.
      *
      * @var string
