@@ -16,6 +16,8 @@
         "SettingAuthorizeUrlHelp": "e.g. https://<USERNAME>.eu.auth0.com/authorize",
         "SettingTokenUrl": "Token URL",
         "SettingTokenUrlHelp": "e.g. https://<USERNAME>.eu.auth0.com/oauth/token",
+        "SettingGetClaimsFromUserinfoEndpoint" : "Get claims from UserInfo endpoint",
+        "SettingGetClaimsFromUserinfoEndpointHelp" : "Get claims from UserInfo endpoint. Not supported by Microsoft AD FS.",
         "SettingUserinfoUrl": "Userinfo URL",
         "SettingUserinfoUrlHelp": "e.g. https://<USERNAME>.eu.auth0.com/userinfo",
         "SettingEndSessionUrl": "Logout URL",
