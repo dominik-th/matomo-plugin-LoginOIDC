@@ -11,7 +11,6 @@ namespace Piwik\Plugins\LoginOIDC;
 
 use Exception;
 use Piwik\Access;
-use Piwik\Auth;
 use Piwik\Common;
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
