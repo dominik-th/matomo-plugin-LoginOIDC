@@ -76,14 +76,14 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
 
-- Microsoft Azure AD
+- Microsoft Entra ID:
   - Authorize URL: `https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/authorize`
   - Token URL: `https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/token`
   - Userinfo URL: `https://graph.microsoft.com/oidc/userinfo`
   - Userinfo ID: `sub`
   - OAuth Scopes: `openid email`
 
-- Authentik
+- Authentik:
   - Authorize URL: `https://<YOUR_AUTHENTIK_URL>/application/o/authorize/`
   - Token URL: `https://<YOUR_AUTHENTIK_URL>/application/o/token/`
   - Userinfo URL: `https://<YOUR_AUTHENTIK_URL>/application/o/userinfo/`
@@ -95,5 +95,12 @@ https://matomo.org/faq/troubleshooting/faq_25610/
   In the Authentik Provider:
   - Redirect URIs: `.*` (only that worked for me, don't forget the DOT before!)
   Remaining inputs for provider and application as normal.
-  
+
+  - Okta:
+
+  - Authorize URL: `https://${yourOktaDomain}/oauth2/v1/authorize`
+  - Token URL: `https://${yourOktaDomain}/oauth2/v1/token`
+  - Userinfo URL: `https://${yourOktaDomain}/oauth2/v1/userinfo`
+  - Userinfo ID: `email`
+  - OAuth Scopes: `openid email`
   
