@@ -238,21 +238,28 @@ class Controller extends \Piwik\Plugin\Controller
         $_SESSION['loginoidc_idtoken'] = empty($result->id_token) ? null : $result->id_token;
         $_SESSION['loginoidc_auth'] = true;
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            "Authorization: Bearer " . $result->access_token,
-            "Accept: application/json",
-            "User-Agent: LoginOIDC-Matomo-Plugin"
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_URL, $settings->userinfoUrl->getValue());
-        // request remote userinfo and remote user id
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $result = json_decode($response);
+        if ($settings->getClaimsFromUserInfoEndpoint->getValue()) {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                "Authorization: Bearer " . $result->access_token,
+                "Accept: application/json",
+                "User-Agent: LoginOIDC-Matomo-Plugin"
+            ));
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_URL, $settings->userinfoUrl->getValue());
+            // request remote userinfo and remote user id
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $result = json_decode($response);
 
-        $userinfoId = $settings->userinfoId->getValue();
-        $providerUserId = $result->$userinfoId;
+            $userinfoId = $settings->userinfoId->getValue();
+            $providerUserId = $result->$userinfoId;
+        }
+        else {
+            $acc_token = json_decode(base64_decode(explode('.', $result->access_token)[1]));
+            $userinfoId = $settings->userinfoId->getValue();
+            $providerUserId = $acc_token->$userinfoId;
+        }
 
         if (empty($providerUserId)) {
             throw new Exception(Piwik::translate("LoginOIDC_ExceptionInvalidResponse"));

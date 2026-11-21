@@ -63,6 +63,14 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     public $autoLinking;
 
     /**
+     * Get claims from UserInfo endpoint
+     *
+     * @var bool
+     */
+    public $getClaimsFromUserInfoEndpoint;
+
+
+    /**
      * The name of the oauth provider, which is also shown on the login screen.
      *
      * @var string
@@ -152,6 +160,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         $this->allowSignup = $this->createAllowSignupSetting();
         $this->bypassTwoFa = $this->createBypassTwoFaSetting();
         $this->autoLinking = $this->createAutoLinkingSetting();
+        $this->getClaimsFromUserInfoEndpoint = $this->createClaimsFromUserInfoEndpointSetting();
         $this->authenticationName = $this->createAuthenticationNameSetting();
         $this->authorizeUrl = $this->createAuthorizeUrlSetting();
         $this->tokenUrl = $this->createTokenUrlSetting();
@@ -248,6 +257,21 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
         });
     }
+
+    /**
+     * Add ClaimsFromUserInfoEndpoint setting.
+     *
+     * @return SystemSetting
+     */
+    private function createClaimsFromUserInfoEndpointSetting() : SystemSetting
+    {
+        return $this->makeSetting("getClaimsFromUserInfoEndpoint", $default = true, FieldConfig::TYPE_BOOL, function(FieldConfig $field) {
+            $field->title = Piwik::translate("LoginOIDC_SettingGetClaimsFromUserinfoEndpoint");
+            $field->description = Piwik::translate("LoginOIDC_SettingGetClaimsFromUserinfoEndpointHelp");
+            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+        });
+    }
+
 
     /**
      * Add authentication name setting.
